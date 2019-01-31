@@ -1,0 +1,936 @@
+@charset "UTF-8";
+/*css 初始化 */
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form,fieldset, legend, img {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset, img, input, button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline-style: none;
+  /*外面环绕线*/
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+/*去掉原样式中的小黑点*/
+
+input {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-family: "Microsoft YaHei","微软雅黑";
+}
+
+select, input {
+  vertical-align: middle;
+}
+
+/*输入字居中显示*/
+select, input, textarea {
+  font-size: 15px;
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+body {
+  font: 15px/150% Arial, "Microsoft YaHei", Verdana, "\5b8b\4f53";
+  color: #666;
+  background: #fff;
+}
+
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+a.black,a.black:hover,a.black:visited {
+  color:#000;
+}
+a.black:hover {
+  color:#182fe9;
+}
+s, i {
+  font-style: normal;
+  text-decoration: none;
+}
+/*初始化结束*/
+.margt{
+  margin-top:5px;
+}
+
+.loginBox{
+  width: 100%;
+  background-color: #2dc0ca;
+  background-image: url('../assets/loginBg.jpg');
+  background-repeat: no-repeat;
+}
+/* 顶部 */
+.loginTop{
+  width: 1300px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.login-college {
+  line-height: 46px;
+  font-size: 30px;
+  font-family: "楷体","微软雅黑";
+  color: #fff;
+}
+
+.banner-school-img{
+  min-width: 46px;
+  height: 46px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.login-paper {
+  font-size: 36px;
+  line-height: 46px;
+  font-family: "微软雅黑";
+  color: #fff;
+}
+
+/*  中间部分 公告*/
+.brief {
+  width: 1300px;
+  margin: 50px auto 0;
+  padding-bottom: 50px;
+}
+
+.bulletin-board {
+  float: left;
+  width: 940px;
+}
+/*偶数 */
+.double {
+  padding: 14px;
+  color:#000;
+  width: 429px;
+  /*height: 215px;*/
+  height: 187px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  float: left;
+  background: #fff;
+  box-shadow: 0 4px 3px #888888;
+  /*border: 1px solid #e8e8e8;*/
+}
+/*奇数*/
+.singleton {
+  box-sizing: border-box;
+  min-height: 215px;
+  padding: 14px;
+  color:#000;
+  margin-bottom: 10px;
+  background: #fff;
+  box-shadow: 0 4px 3px #888888;
+  /*border: 1px solid #e8e8e8;*/
+}
+
+/*展示框内的标题*/
+.bulletin-board h2{
+  position: relative;
+  font-size: 18px;
+  color:#22B3C8;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+/*展示标题右边的更多 More》》字样*/
+.bulletin-board h2 a{
+  position:absolute;
+  font-size: 12px;
+  right: 5px;
+  /*float: right;*/ /*兼容ie6不可用*/
+  color:#22B3C8;
+}
+.bulletin-board h2 a:hover{
+  color:#008c93;
+}
+
+
+/*标题下方的资料展示文章*/
+/*.articlelist 是展示文章的ul*/
+.articlelist li{
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  border-bottom:1px dashed #ccc;
+}
+
+/*inform是每条消息 */
+.articlelist .inform{
+  float:left;
+  padding-left: 10px;
+  color:#636262;
+  background: url("../assets/ml_b1.png") no-repeat 0 10px;
+}
+
+.articlelist .inform:hover{
+  color:#58aad7;
+  text-decoration: underline;
+  background: url("../assets/ml_b1.png") no-repeat 0 -12px;
+}
+/*右侧日期*/
+.articlelist span{
+  float: right;
+  color:#636262;
+}
+
+/*登陆窗口*/
+.PasswordBox{
+  float: right;
+  width: 310px;
+  height: 540px;
+  background: #fff;
+  margin-left: 15px;
+  padding: 10px;
+}
+.switcher{
+  border-bottom: 1px solid #ccc;
+}
+
+.switcher >li{
+  float: left;
+  width:150px;
+  line-height: 40px;
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+
+  cursor: pointer;
+}
+.switcher >li:hover{
+  border-bottom: 3px solid #22B3C8;
+}
+.switcher >li.active{
+  border-bottom: 3px solid  #22B3C8;
+}
+
+/*微信登陆*/
+.WeChat{
+  font-size: 12px;
+  padding: 10px 0;
+  line-height: 20px;
+}
+
+.QRcode_box{
+  margin-left: 5px;
+}
+
+.WeChatTips{
+  border-top: 1px solid #ccc;
+  background: #ddd;
+  margin: 10px -10px -20px;
+  padding: 10px;
+}
+
+.WeChatTips>p>b{
+  color: #ef3950;
+}
+
+.WeChatTips>p>a{
+  color: #22B3C8;
+  margin-left: 10px;
+}
+
+/*账号密码登录*/
+.write li{
+  margin-top: 20px;
+  position: relative;
+  line-height: 38px;
+}
+.write li.title{
+  text-align: center;
+  font-size: 20px;
+  font-family:"Microsoft Yahei";
+}
+.PasswordBox .user,
+.PasswordBox .pswd,
+.PasswordBox .verifier{
+  width: 90%;
+  height: 38px;
+  line-height:38px;
+  padding-left: 10%;
+  padding-top: 5%;
+  background-color:#fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+/*用户名框背景*/
+.usericon{
+  position:absolute;
+  top: 22px;
+  left: 5px;
+  width: 20px;
+  height: 22px;
+  background:url("../assets/login.gif") no-repeat ;
+}
+/*密码框背景*/
+.pswdicon{
+  position:absolute;
+  top: 22px;
+  left: 5px;
+  width: 20px;
+  height: 22px;
+  background:url("../assets/login.gif") no-repeat -22px 1px;
+}
+/*输入验证码相对较短*/
+.PasswordBox .verifier{
+  width: 171px;
+}
+/*ie7验证码获取焦点时的兼容*/
+.space{
+  display: inline-block;
+  width: 20px;
+}
+/*验证图片*/
+.verifier-code{
+  width: 75px;
+  height: 25px;
+  background-color: #000
+}
+/*验证码框背景*/
+.verifiericon{
+  position:absolute;
+  top: 22px;
+  left: 5px;
+  width: 20px;
+  height: 22px;
+  background:url("../assets/login.gif") no-repeat -45px 0;
+}
+
+/*登陆按钮*/
+.btn{
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+  background-color: #22B3C8;
+  margin-top: 10px;
+}
+.btn:hover{
+  background-color:#008c93;
+}
+
+/*尾部开始*/
+.footer{
+  border-top:1px solid #f4f4f4;
+  width:1300px;
+  margin:0 auto;
+  padding-top:25px;
+  padding-bottom: 20px;
+  background-color: #f4f4f4;
+  color:#010101;
+  font-size:12px;
+}
+.footer>.logimg-box{
+  width:182px;
+  height:60px;
+  float:left;
+}
+.footer>.logtext-box{
+  float:left;
+  padding-left:22px;
+  height:80px;
+}
+
+
+/*第一行*/
+.file{
+  margin-left: 15px;
+  color:#010101;
+}
+.badge{
+  margin-right:5px;
+}
+.cnki{
+  margin-right: 15px;
+}
+
+
+
+/*公告页开始 共用 Notice.html Details.html*/
+/*底色*/
+.grounding{
+  background-color: #22B3C8;
+}
+.Nbanner {
+  font-family: "微软雅黑";
+  color: #fff;
+  height: 130px;
+  width: 1300px;
+  margin: 0 auto;
+  /*background:url("../assets/Notice-banner.gif")  no-repeat   ;*/
+  position: relative;
+}
+
+.Nlogin-paper {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  font-size: 38px;
+  line-height: 44px;
+}
+
+.Ncontent{
+  font-family: "微软雅黑";
+  /* color:#666666;  */
+  width: 1300px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+/*左侧菜单盒子 共用Notice.html Details.html*/
+.NLeft{
+  width: 248px;
+  float: left;
+  padding-bottom: 110px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+}
+.NLeft h3{
+  font-weight: 400;
+  font-size: 14px;
+  padding: 22px 0px 16px 31px;
+  border-bottom: 1px solid #e7e7e7;
+  cursor:pointer;
+}
+/*h3左侧的图标志*/
+.NLeft h3 i{
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  /*background-color: red;*/
+  background: url("../assets/hong.png") no-repeat -48px;
+  vertical-align: text-bottom;
+}
+.NLeft h3:hover i{
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  /*background-color: red;*/
+  background: url("../assets/hong.png") no-repeat;
+  vertical-align: text-bottom;
+}
+
+/*菜单项ul下的a*/
+.every{
+  display: block;
+  color: #666666;
+  height: 39px;
+  overflow: hidden;
+  padding-left: 31px;
+  line-height: 39px;
+  margin: 14px 0;
+  background-color: #f5f5f5;
+  border-left: 3px solid #f5f5f5;
+}
+/* a的图标 */
+.Nico{
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  /*background-color: red;*/
+  background: url("../assets/hong.png") no-repeat -72px 0;
+  vertical-align: text-bottom;
+}
+
+.every:hover{
+  background-color: #ededed;
+  border-left: 3px solid #22B3C8;
+  color: #22B3C8;
+}
+
+.every:hover .Nico{
+  /*background-color: #fff;*/
+  background: url("../assets/hong.png") no-repeat -24px 0;
+}
+.sign{
+  background-color: #ededed;
+  border-left: 3px solid #22B3C8;
+  color: #22B3C8;
+}
+
+.sign .Nico{
+  background: url("../assets/hong.png") no-repeat -24px 0;
+}
+
+.Hovei{
+  /*background-color: #fff;*/
+  background: url("../assets/hong.png") no-repeat -24px 0;
+}
+.Hover{
+  background-color: #ededed;
+  border-left: 3px solid #22B3C8;
+  color: #22B3C8;
+}
+/*左侧样式完成共用 Notice.html Details.html*/
+
+/*右侧公告 共用Notice.html Details.html*/
+.NRnews{
+  font-size: 14px;
+  float: right;
+  padding: 0 22px 0 15px;
+  width: 996px;
+  border: 1px solid #e0e0e0;
+}
+.NRnews h2{
+  /*此样式Notice*/
+  font-size: 18px;
+  color:#22B3C8;
+  border-bottom: 1px solid #e4e4e4;
+  padding:30px 0 18px 0;
+  cursor: pointer;
+}
+
+/*标题下方的资料展示文章*/
+/*.articlelist 是展示文章的ul*/
+.Narticlelist li{
+  height: 32px;
+  line-height: 32px;
+  width: 100%;
+  border-bottom:1px dashed #e4e4e4;
+}
+.Narticlelist .last{
+  border-bottom: none;
+}
+
+
+/*inform是每条消息 */
+.Narticlelist .Ninform{
+  float:left;
+  padding-left: 10px;
+  color:#666666;
+  /*background-color: red;*/
+  background: url("../assets/ml_b1.png") no-repeat 0 13px;
+}
+
+.Narticlelist .Ninform:hover{
+  color:#3c8fbb;
+  /*background-color: red;*/
+  background: url("../assets/ml_b1.png") no-repeat 0 -9px;
+}
+/*右侧日期*/
+.Narticlelist span{
+  float: right;
+  color:#666666;
+}
+
+
+/*页码的位置*/
+.page{
+  text-align: right;
+  line-height: 40px;
+  height: 40px;
+  border-top:1px solid #e4e4e4 ;
+}
+/*尾部开始 共用Notice.html Details.html*/
+/*尾部开始*/
+.Nfooter{
+  text-align: center;
+  padding-top:25px;
+  padding-bottom: 20px;
+  border-top: 1px solid #d5d5d5;
+  background-color: #eeeeee;
+  color:#000000;
+  font-size:12px;
+}
+.Nfooter li {
+  height: 20px;
+  line-height: 20px;
+}
+/*第一行A标签*/
+.Nfile{
+  margin-left: 15px;
+  color:#010101;
+}
+.Nbadge{
+  margin-right:5px;
+}
+.Ncnki{
+  margin-right: 15px;
+}
+
+/*右侧展示第2中样式*/
+/*右侧的盒子 NRnews-two==NRnews*/
+.NRnews-two{
+  float: right;
+  padding: 0 22px 0 15px;
+  width: 996px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+}
+.NRnews-two h2{
+  /*此样式Notice*/
+  font-size: 18px;
+  color:#22B3C8;
+  border-bottom: 1px solid #e4e4e4;
+  padding:30px 0 18px 0;
+  cursor: pointer;
+}
+/*小标题 h4*/
+.NRparticular{
+  padding: 24px 0 18px 8px;
+  /*padding-left: 8px;*/
+  font-weight: bold;
+}
+/*小标题前菱形图标*/
+.rhombus{
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  vertical-align:middle;
+  background:url("../assets/ml_b1.png") no-repeat;
+  margin-right: 10px;
+}
+.NRparticular span{
+  font-weight: 400;
+}
+.NRnews-two p{
+  font-weight: 400;
+  font-size: 14px;
+  padding-left: 18px;
+}
+.imaginary-line{
+  border-top: 1px dashed #ececec;
+  margin-top: 16px;
+}
+
+/*详情页上部分的文章头部*/
+.NRnews .headline{
+  padding-top: 24px;
+  color:#000;
+  border-bottom: 1px solid #e4e4e4;
+}
+.NRnews .headline h3{
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+
+}
+/*发表时间*/
+.NpublishTime{
+  padding: 17px 0 22px 0;
+  color:#7d7d7d;
+  margin-top:5px;
+}
+.Narticle p{
+  margin-top: 10px;
+  text-indent:2em;
+  overflow: hidden;
+  overflow-x: auto;
+}
+/*下载字样*/
+.Ndownload{
+  display: inline-block;
+  color:#ed7985;
+  margin: 20px 0;
+  padding-left:15px;
+  /*background-color: red;*/
+  background: url("../assets/xiazai.png") no-repeat;
+}
+.Ndownload:hover{
+  color: #dd1b2a;
+}
+/*上/下 一篇的盒子*/
+.Twofish{
+  border-top:1px solid #e4e4e4;
+  height: 60px;
+  line-height: 60px;
+
+}
+.Twofish a{
+  width: 231px;
+  display:inline-block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:#77a8cd;
+  margin-right: 39px;
+}
+.Twofish a:hover{
+  color:#1189cc;
+}
+
+
+/*论文详情页开始 paper.html*/
+/*右侧上部分*/
+.P-title{
+  height:100px;
+  box-sizing:border-box;
+  padding-top: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e4e4e4;
+}
+/*上部分h1*/
+.R-h1{
+  color:#333333;
+}
+.R-time{
+  margin-top: 30px;
+  color: #666666;
+}
+
+/*右侧下部分*/
+.P-material{
+  margin-top: 20px;
+}
+/*ul .P-material*/
+.P-resource{
+  border-top: 1px solid #e4e2e3;
+}
+
+.P-material li{
+  padding-left:130px;
+  box-sizing: border-box;
+  border: 1px solid #e6e6e9;
+  /*border: 1px solid red;*/
+  background-color: #f5f6f5;
+  border-top: none;
+  /*height: 53px;*/
+}
+/*li中左侧的div 带背景的*/
+.P-left{
+  width: 130px;
+  margin-left:-130px ;
+  box-sizing: border-box;
+  padding: 24px 24px 20px 0;
+  text-align: right;
+  background-color: #f5f6f5;
+  color: #333333;
+  float: left;
+}
+/*li中右侧的div*/
+.P-right{
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 244px;
+  padding: 25px 0px 20px 12px;
+  float: left;
+  color: #666666;
+  background-color: #fff;
+}
+/*li分为4份  时候的右边盒子*/
+.P-right4{
+  box-sizing: border-box;
+  width: 50%;
+  min-width: 244px;
+  padding: 25px 0px 20px 12px;
+  float: left;
+  color: #666666;
+  background-color: #fff;
+}
+/*li中右侧文字小的p标签*/
+.P-big{
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 12px;
+  line-height: 15px;
+  padding-left: 12px;
+  padding-top:13px;
+  padding-bottom: 11px;
+  float: left;
+  color: #666666;
+  background-color: #fff;
+}
+/*下载块*/
+.P-download{
+  height:56px;
+  box-sizing:border-box;
+
+}
+.gxf_pro_content {
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  font: 14px/20px 'Microsoft yahei';
+  padding: 15px 20px;
+  margin-top: 10px;
+}
+.gxf_project_detadil_ul li{
+  float: left;
+  height: 32px;
+  width:350px;
+}
+.detadil_txt_left{
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  line-height:30px;
+}
+.detadil_txt_right{
+  width:230px;
+  cursor:pointer;
+  display:inline-block;
+  overflow: hidden;
+  line-height:30px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align:middle;
+}
+.WZN-lrtable{
+  margin-top: 10px;
+}
+.WZN-lrtable td div {
+  box-sizing: border-box;
+  float: left;
+}
+
+.WZN-lrtable td {
+  border: 1px solid #ccc;
+  min-height: 44px;
+  font-family: 'Microsoft yahei';
+  font-size: 14px;
+}
+
+.WZN-lrtable-l {
+  width: 150px;
+  padding-right: 10px;
+  height: 44px;
+  line-height: 48px;
+  text-align: right;
+  color: #333333;
+  background-color: #f5f6f5;
+}
+
+.WZN-lrtable-r {
+  color: #969696;
+  min-height: 44px;
+  width: 800px;
+  line-height: 20px;
+  padding: 12px 96px 12px 12px;
+}
+
+
+#login_QRcode .impowerBox .qrcode {
+  width: 200px;
+}
+#login_QRcode .impowerBox .title {
+  display: none;
+}
+#login_QRcode .impowerBox .info {
+  width: 200px;
+}
+#login_QRcode .status_icon {
+  display: none
+}
+#login_QRcode .impowerBox .status {
+  text-align: center;
+}
+
+.bottomTips_left{
+  float: left;
+  width: 78px;
+}
+
+.bottomTips_right{
+  float: left;
+  width: 230px;
+  line-height: 26px;
+  font-size: 12px;
+}
+.bottomTips{
+  padding-top: 10px;
+}
+
+a.resetPwd{
+  float: right;
+  margin-right: 10px;
+  color: #22B3C8;
+}
+
+a.resetPwd:hover{
+  color: #008c93;
+  text-decoration: underline;
+}
+
+.bottomTips_right>p{
+  padding-left: 20px;
+  position: relative;
+}
+
+.bottomTips_right>p>i{
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+}
+
+.bottomTips_right>p.phone>i{
+  background: url("../assets/sge_ph_ui.gif") no-repeat 0 0;
+}
+
+.bottomTips_right>p.email>i{
+  top: 8px;
+  background: url("../assets/sge_eml_ui.gif") no-repeat 0 0;
+}
+
+.bottomTips_right>p.txt>i{
+  background: url("../assets/sge_cpy_ui.gif") no-repeat 0 0;
+}
+
+
+/*我自己写的css*/
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  float: left;
+  width: 740px;
+}
+
+/*第二张卡片就是登入窗口的css*/
+.login-card{
+  float: right;
+  width: 450px;
+}
+/*第二张卡片中的头里的菜单栏*/
+.el-menu-demo{
+  text-align: center;
+}
+
+/*底部双二维码卡片*/
+
