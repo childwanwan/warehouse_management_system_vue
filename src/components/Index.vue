@@ -320,11 +320,13 @@
                     this.$message.error(res.data['message']);
                   }else if (res.data['code'].toString()==='-1'){
                     this.$message.error(res.data['message']);
-                  }else {this.$message.success("登入成功！");}
+                  }else if(res.data['code'].toString()==='1') {
+                    this.$message.success("登入成功！");
+                  }else this.$message.error(res.data['message']);
                 })
                 .catch((res) => {
                   console.log(res.data);
-                  this.$message.error("登入失败！")
+                  this.$message.error("请求失败！")
                 });
 
             } else {
