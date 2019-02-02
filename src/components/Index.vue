@@ -131,7 +131,7 @@
       <!--左边-->
       <div style="float: left">
         <p>
-          <a href="#" target="_blank">关于网易</a><span>&nbsp;|&nbsp;</span>
+          <a href="#" target="_blank">关于东理</a><span>&nbsp;|&nbsp;</span>
           <a href="#" target="_blank">客户服务</a><span>&nbsp;|&nbsp;</span>
           <a href="#" target="_blank">服务条款</a><span>&nbsp;|&nbsp;</span>
           <a href="#" target="_blank">网站导航</a><span>&nbsp;|&nbsp;</span>
@@ -143,7 +143,7 @@
         </p>
         <p>
           <span>违法和不良信息举报电话：157-9793-4717</span>
-          <span>举报邮箱：</span><a href="#">n1635679119@qq.com</a>
+          <span>举报邮箱：</span><a href="#">1635679119@qq.com</a>
         </p>
 
       </div>
@@ -212,8 +212,8 @@
         ipAddress:'',
 
         ruleForm: {
-          username: '',
-          password: '',
+          username: '15797934717',
+          password: '123456789',
           identify: '仓库管理员',
           securityCode: '',
         },
@@ -307,13 +307,13 @@
                   this.$message.error("百度失败！")
                 });*/
               //var _json = jQuery.param({ "username": "password", "password": "20130209","identify":"123","securityCode":"123456" });
-              this.$http.post('http://localhost:10010/api/logic/logic_controller/login',
+              this.$axios.post('http://localhost:10010/api/logic/logic_controller/login',
                 {
-                  username: this.ruleForm.username,
-                  password: this.ruleForm.password,
-                  identify: this.ruleForm.identify,
-                  ip:this.ipAddress,
-                }, {emulateJSON: true})
+                  'username': this.ruleForm.username,
+                  'password': this.ruleForm.password,
+                  'identify': this.ruleForm.identify,
+                  'ip':this.ipAddress,
+                })
                 .then((res) => {
                   console.log(res.data);//res.data['hello world']
                   if (res.data['code'].toString()==='0') {
@@ -322,6 +322,7 @@
                     this.$message.error(res.data['message']);
                   }else if(res.data['code'].toString()==='1') {
                     this.$message.success("登入成功！");
+                    this.$router.push({path:'/wms_manager_home',query:{username:this.ruleForm.username,token:res.data['data'].toString()}});
                   }else this.$message.error(res.data['message']);
                 })
                 .catch((res) => {

@@ -4,8 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import VueResource from 'vue-resource'
-Vue.use(VueResource);
+
+import axios from 'axios';
+Vue.prototype.$axios = axios
+
+let token = 'user';
+axios.defaults.headers.common['token'] = token;
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
