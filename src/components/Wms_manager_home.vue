@@ -20,7 +20,6 @@
           // 取到路由带过来的参数
           this.telephone = this.$route.query.username;
           this.token = this.$route.query.token;
-
         }
       },
       created() {
@@ -32,10 +31,15 @@
           emulateJSON: true})
           .then((res) => {
             console.log(res.data);//res.data['hello world']
+            console.log(res.data.indexOf("-10"));
+            if (res.data.indexOf("-10")>0){
+              this.$message.error("请先登入");
+              this.$router.push({path:'/'});}
             if (res.data['code'].toString()==='1') {
               this.$message.success("获取仓库信息成功");
             }else if (res.data['code'].toString()==='-10') {
-              this.$message.error(res.data['message'].toString());
+              this.$message.error("请先登入");
+              this.$router.push({path:'/'});
             }else if (res.data['code'].toString()==='-9900'){
               this.$message.error(res.data['message'].toString());
             }else {
@@ -44,8 +48,8 @@
             this.data1=res.data;
           })
           .catch((res) => {
-            console.log(res.data);
-            this.$message.error("请求失败！")
+            //console.log(res.data);
+            //this.$message.error("请求失败！")
           });
       },
       watch: {
