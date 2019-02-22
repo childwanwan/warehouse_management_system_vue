@@ -322,7 +322,7 @@
                     this.$message.error(res.data['message']);
                   }else if(res.data['code'].toString()==='1') {
                     this.$message.success("登入成功！");
-                    this.$router.push({path:'/wms_manager_home',query:{username:this.ruleForm.username,token:res.data['data'].toString()}});
+                    this.$router.push({path:'/houseware_manager_login_success',query:{username:this.ruleForm.username,token:res.data['data'].toString()}});
                   }else this.$message.error(res.data['message']);
                 })
                 .catch((res) => {

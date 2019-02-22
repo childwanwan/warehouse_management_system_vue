@@ -1,0 +1,121 @@
+@charset "UTF-8";
+/*css 初始化 */
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form,fieldset, legend, img {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset, img, input, button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline-style: none;
+  /*外面环绕线*/
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+/*去掉原样式中的小黑点*/
+
+input {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-family: "Microsoft YaHei","微软雅黑";
+}
+
+select, input {
+  vertical-align: middle;
+}
+
+/*输入字居中显示*/
+select, input, textarea {
+  font-size: 15px;
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+body {
+  font: 15px/150% Arial, "Microsoft YaHei", Verdana, "\5b8b\4f53";
+  color: #666;
+  background: #fff;
+}
+
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+a.black,a.black:hover,a.black:visited {
+  color:#000;
+}
+a.black:hover {
+  color:#182fe9;
+}
+s, i {
+  font-style: normal;
+  text-decoration: none;
+}
+/*头部*/
+.head{
+  height: 130px;
+  display: block;
+  width: 100%;
+  background-color: #2dc0ca;
+  background-image: url('../assets/loginBg.jpg');
+  background-repeat: no-repeat;
+}
+
+.loginTop{
+  float: left;
+  width: 40%;
+  margin-left: 1%;
+  padding-top: 1%;
+}
+
+.login-college {
+  line-height: 46px;
+  font-size: 20px;
+  font-family: "楷体","微软雅黑";
+  color: #fff;
+}
+
+.banner-school-img{
+  min-width: 46px;
+  height: 46px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.login-paper {
+  font-size: 36px;
+  line-height: 46px;
+  font-family: "微软雅黑";
+  color: #fff;
+}
+
+.head_right{
+  font-size: 20px;
+  float: right;
+}
