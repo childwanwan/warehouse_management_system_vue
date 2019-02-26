@@ -13,7 +13,7 @@
       <div style="float: right;font-size: 15px;color: white;padding: 2%;line-height: 15px;">
         <p>{{username}}({{telephone}})，&nbsp欢迎使用此系统&nbsp&nbsp&nbsp&nbsp您的被点赞次数为：{{supportTimes}}</p>
         <br>
-        <p>时间：{{time}}/角色：仓库管理员/仓库号：{{housewareID}}</p>
+        <p>时间：{{time}}&nbsp&nbsp角色：{{role}}&nbsp&nbsp仓库号：{{housewareID}}</p>
         <br>
         <p style="color: white">
           <a id="help" href="#" style="color: white"><i></i>帮&nbsp;&nbsp;助</a>
@@ -159,19 +159,28 @@
     name: "Houseware_manager_login_success",
     data() {
       return {
+        //后台带回
         username: '万平平',
         token: '',
         supportTimes: '0',
-        telephone: '15797934717',
-        time: '2019-2-4 09:54:23',
-        role: '仓库管理员',
+        //前端直接带回数据
+        telephone: '',
+        //time自己获取
+        time: new Date().toDateString(),
+        //数据让前端带过来吧
+        role: '',
         housewareID: '1',
+        //左边选择的菜单栏
         el_menu_selected: '',
+        //页数大小
         pageSize: 5,
+        //当前页
         currentPage: 1,
+        //仓库带过来的信息
         housewareMessagetableData: [
-          {ID: '1', name: '东华理工', repertory: '200', space: '20', address: '江西省南昌市经济开发区广兰大道418号', status: 'OK'},
+          {ID: '', name: '', repertory: '', space: '', address: '', status: ''},
         ],
+        //仓库物品信息
         productMessagetableData: [
           {
             ID: '',
@@ -220,7 +229,10 @@
           }
         ],
 
+        //提示内容
         kindlyReminder: '您所管辖仓库即将会有物品出入库，忘您留心。',
+        //接一个对象
+        getObj: {},
       }
     },
     methods: {
@@ -234,6 +246,7 @@
         this.el_menu_selected = '1-3';
       },
 
+      //改变页数所触发的函数
       currentChange: function (val) {
         //alert("折哦度没进来" + val);
         //console.log(this.productMessagetableData);
@@ -245,8 +258,9 @@
             }
           }
         ).then((response) => {
-          //console.log(response.data['data']['data'][0]['id']);
+          //console.log(response.data['data']['code']);
 
+          if (response.data['data']['code'].toString()==='1') {
           //数据赋值
           for (let i = 0; i < this.pageSize; i++) {
             this.productMessagetableData[i].ID = response.data['data']['data'][i]['id'].toString();
@@ -258,6 +272,9 @@
             this.productMessagetableData[i].price = response.data['data']['data'][i]['price'];
             this.productMessagetableData[i].updateTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
           }
+          }else {
+            this.$message.error(response.data['data']['message']);
+          }
         })
           .catch(function (error) {
             console.log(error);
@@ -265,16 +282,40 @@
       },
       getParams: function () {
         // 取到路由带过来的参数
-        this.username = this.$route.query.username;
+        this.telephone = this.$route.query.tel;
         this.token = this.$route.query.token;
+        this.role = this.$route.query.identify;
+        this.username = this.$route.query.username;
+        this.supportTimes = this.$route.query.supportTimes;
+        this.warehouseId = this.$route.query.warehouseID;
+        //仓库信息{ID: '', name: '', repertory: '', space: '', address: '', status: ''}
+        this.getObj = this.$route.query.warehouse;
+        /*console.log(this.getObj['name'].toString());
+        console.log(this.housewareMessagetableData['name']);
+        this.housewareMessagetableData['name']=this.getObj['name'];
+        console.log("前期"+this.housewareMessagetableData['name']);*/
+
+
+  },
+      getWarehouseData:function () {
+        this.housewareMessagetableData[0]['ID']=this.getObj['id'];
+        this.housewareMessagetableData[0]['name']=this.getObj['name'];
+        this.housewareMessagetableData[0]['repertory']=this.getObj['repertory'];
+        this.housewareMessagetableData[0]['space']=this.getObj['space'];
+        this.housewareMessagetableData[0]['address']=this.getObj['address'];
+        this.housewareMessagetableData[0]['status']=this.getObj['status'];
       }
+
     },
     created() {
       //获取带过来的参数，和设置请求的token
       this.getParams();
+      this.getWarehouseData();
       this.$axios.defaults.headers.common['token'] = this.token;
       //请求物品数据第一页
       this.currentChange(1);
+      //请求，填充其他数据
+
     },
     watch: {
       //左边点击菜单栏那个显示，那个不显示函数

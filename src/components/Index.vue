@@ -322,12 +322,16 @@
                     this.$message.error(res.data['message']);
                   }else if(res.data['code'].toString()==='1') {
                     this.$message.success("登入成功！");
-                    this.$router.push({path:'/houseware_manager_login_success',query:{username:this.ruleForm.username,token:res.data['data'].toString()}});
+                    console.log(res.data['data']['warehouseData']);
+                    //console.log(res.data['data']['userData']['0']['username']);
+                    this.$router.push({path:'/houseware_manager_login_success',query:{tel:this.ruleForm.username,token:this.ruleForm.username,identify:this.ruleForm.identify,
+                       username:res.data['data']['userData']['0']['username'],supportTimes:res.data['data']['userData'][0]['likeCount'],warehouseID:res.data['data']['warehouseData']['id'],
+                      warehouse:res.data['data']['warehouseData']}});
                   }else this.$message.error(res.data['message']);
                 })
                 .catch((res) => {
-                  console.log(res.data);
-                  this.$message.error("请求失败！")
+                  //console.log(res.data);
+                  //this.$message.error("请求失败！")
                 });
 
             } else {
