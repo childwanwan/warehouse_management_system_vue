@@ -43,6 +43,38 @@ export function getGoodsBygoodsName(data) {
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
+/*------------------------------------获取入库信息------------------------------------*/
+export function getInstore(data) {
+  const url = '/instore/query'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------获取入库信息的用户名------------------------------------*/
+export function getEmployeeById(data) {
+  const url = '/employee/getEmployeeById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------获取入库详情------------------------------------*/
+export function getdetailById(data) {
+  const url = '/instore/getInstoresGoodsByInstoresId'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据获取入库单情况------------------------------------*/
+export function getInstoreById(data) {
+  const url = '/instore/queryById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------根据id获取goods信息------------------------------------*/
+export function getGoodsById(data) {
+  const url = '/goods/getGoodsById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
 
 /*---------------------------------管理员请求的接口------------------------------------*/
 

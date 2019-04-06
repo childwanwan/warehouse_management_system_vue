@@ -42,9 +42,12 @@
                 仓库目前信息
               </el-menu-item>
               <el-menu-item index="1-2" @click="select1_2">
-                仓库物品管理
+                仓库出库管理
               </el-menu-item>
               <el-menu-item index="1-3" @click="select1_3">
+                仓库入库管理
+              </el-menu-item>
+              <el-menu-item index="1-4" @click="select1_4">
                 仓库报损管理
               </el-menu-item>
             </el-menu-item-group>
@@ -109,36 +112,55 @@
             <el-table-column
               prop="goodsCode"
               label="物品编码"
-              width="180">
+              width="180"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="goodsType"
-              label="物品类型">
+              label="物品类型"
+              align="center"
+              width="180">
             </el-table-column>
             <el-table-column
               prop="goodsName"
               label="物品名称"
-              width="180">
+              width="180"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="specificationItems"
-              label="规格">
+              label="规格"
+              width="180"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="customAttributeItems"
               label="自定义规格"
-              width="180">
+              width="180"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="comment"
               label="物品描述"
               width="180"
-              height="47">
+              align="center">
             </el-table-column>
             <el-table-column
               prop="goodsNum"
-              label="物品数量">
+              label="物品数量"
+              width="180"
+              align="center">
             </el-table-column>
+            <!--<el-table-column-->
+            <!--label="出库"-->
+            <!--width="157"-->
+            <!--align="center" >-->
+            <!--<template slot-scope="scope">　-->
+            <!--<el-button type="primary" style="width: 70%;text-align: center;margin-left: 5%;height: 45px">出库</el-button>　　　　　-->
+            <!--&lt;!&ndash;<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>&ndash;&gt;-->
+            <!--&lt;!&ndash;<button style="width: 80px !important;">出库</button>&ndash;&gt;-->
+            <!--</template>-->
+            <!--</el-table-column>-->
           </el-table>
           <!--分页-->
           <div style="text-align: center;margin-top: 30px;">
@@ -158,9 +180,132 @@
         </div>
 
       </div>
-      <div id="ProductManager" class="ProductManager"
-           style="display: none;margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库物品管理
+
+
+      <!--出库管理-->
+      <div id="ProductManagerOut" class="ProductManagerOut" style="display: none">
+        <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库出库管理</div>
+        <!--<div style="float: left">-->
+        <!--<el-card shadow="hover">-->
+        <!--创建出库单-->
+        <!--</el-card>-->
+        <!--</div>-->
+
+        <el-table
+          :data="outstore"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="goodsCode"
+            label="物品编码"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="goodsType"
+            label="物品类型"
+            align="center"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="goodsName"
+            label="物品名称"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="specificationItems"
+            label="规格"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="customAttributeItems"
+            label="自定义规格"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="comment"
+            label="物品描述"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="goodsNum"
+            label="物品数量"
+            width="180"
+            align="center">
+          </el-table-column>
+        </el-table>
+
+
       </div>
+
+      <div id="ProductManagerIn" class="ProductManagerIn" style="display: none">
+        <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库入库管理</div>
+        <!--<div style="float: left">-->
+        <!--<el-card shadow="hover">-->
+        <!--创建出库单-->
+        <!--</el-card>-->
+        <!--</div>-->
+
+
+        <el-table
+          :data="instore"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="provideId"
+            label="物品出手人"
+            width="252"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="reserverId"
+            label="物品接收人"
+            align="center"
+            width="252">
+          </el-table-column>
+          <el-table-column
+            prop="instoreTime"
+            label="入库时间"
+            width="252"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="totalNum"
+            label="物品总数量"
+            width="252"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop=""
+            label="操作"
+            width="252"
+            align="center">
+
+            <template slot-scope="scope">　
+            <el-button type="primary" style="width: 70%;text-align: center;margin-left: 5%;height: 45px" @click="showDetail(scope.$index, scope.row)">查询详情</el-button>　　　　　
+            <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
+            <!--<button style="width: 80px !important;">出库</button>-->
+            </template>
+          </el-table-column>
+        </el-table>
+        <div style="text-align: center;margin-top: 30px;">
+          <el-pagination
+            @current-change="inStoreCurrentChange"
+            background
+            layout="prev, pager, next"
+            :total="count"
+            :page-count="allPage">
+          </el-pagination>
+        </div>
+
+
+
+      </div>
+
       <div id="ReportDamages" class="ReportDamages" style="display: none">仓库报损管理</div>
     </div>
   </div>
@@ -170,7 +315,10 @@
   import $ from 'jquery'
   import {getAllgoods} from '../api'
   import {getGoodsBygoodsName} from '../api'
-  import storage, {TOKEN_KEY, TELEPHONE_KEY, USERNAME_KEY, IDENTIFY_KEY, ADDR_KEY} from '../public/js/storage'
+  import {getInstore} from '../api'
+  import {getEmployeeById} from '../api'
+  import storage, {TOKEN_KEY, TELEPHONE_KEY, USERNAME_KEY, IDENTIFY_KEY, ADDR_KEY,INSTORE_KEY} from '../public/js/storage'
+  import {timeFormate} from '../public/js/dateUtils'
 
   export default {
     name: "Houseware_manager_login_success",
@@ -247,6 +395,18 @@
           //   updateTime: ''
           // }
         ],
+        //入库单
+        instore: [],
+        instorePageSize: 5,
+        instoreCount: 0,
+        instoreCurrentPage: 0,
+        instoreAllPage: 0,
+        //出库单
+        outstore: [],
+        outstorePageSize: 5,
+        outstoreCount: 0,
+        outstoreCurrentPage: 0,
+        outstoreAllPage: 0,
         //存查询返回的所有数据
         allGoods: [],
 
@@ -265,6 +425,9 @@
       },
       select1_3: function () {
         this.el_menu_selected = '1-3';
+      },
+      select1_4: function () {
+        this.el_menu_selected = '1-4';
       },
 
       //改变页数所触发的函数
@@ -422,46 +585,135 @@
             }
 
 
-
           } else this.$message.error(res.retMsg);
         }).catch(function (error) {
           console.log(error);
         })
-      }
+      },
 
+      //获取入库信息
+      getInstore: function (val) {
+        this.instoreCurrentPage = val;
+        let data = JSON.stringify({
+            "id":"",
+        })
+        getInstore(data).then((res) => {
+          console.log(res);
+          //console.log(res.retCode);//res.data['hello world']
+          if (res.retCode === 1) {
+            this.instoreCount = res.instores.length;
+            this.instoreAllPage = parseInt(this.instoreCount / this.instorePageSize) + 1;
+
+
+            //解析修改值
+            for (let i = 0; i < this.instoreCount; i++) {
+              //转出手人id
+              let dataId = JSON.stringify({
+                "id":res.instores[i]['provideId'],
+              })
+              getEmployeeById(dataId).then((response) => {
+                //console.log(res.retCode);//res.data['hello world']
+                if (response.retCode === 1) {
+                  res.instores[i]['provideId'] = response.data.employeeName;
+                } else this.$message.error(response.retMsg);
+              }).catch(function (error) {
+                console.log(error);
+              })
+              //转接收人id
+              let dataReserveId = JSON.stringify({
+                "id":res.instores[i]['reserverId'],
+              })
+              getEmployeeById(dataReserveId).then((response) => {
+                //console.log(res.retCode);//res.data['hello world']
+                if (response.retCode === 1) {
+                  res.instores[i]['reserverId'] = response.data.employeeName;
+                } else this.$message.error(response.retMsg);
+              }).catch(function (error) {
+                console.log(error);
+              })
+              //转时间
+              var date = new Date(res.instores[i]['instoreTime'].time);
+              res.instores[i]['instoreTime'] = timeFormate(date);
+            }
+
+            if (this.instorePageSize < this.instoreCount) {
+              for (let i = 0; i < this.instorePageSize; i++) {
+                this.instore.push(res.instores[i]);
+              }
+            } else {
+              this.instoreAllPage = 1;
+              for (let i = 0; i < this.instoreCount; i++) {
+                this.instore.push(res.instores[i]);
+              }
+            }
+          } else this.$message.error(res.retMsg);
+        }).catch(function (error) {
+          console.log(error);
+        })
+      },
+      //入库分页
+      inStoreCurrentChange:function () {
+
+      },
+      showDetail:function (index, row) {
+        storage.set(INSTORE_KEY,row.id);
+        this.$router.push({
+          path: '/instoreDetail'
+        });
+        //console.log(row);
+
+      }
     },
+
     created() {
       //获取带过来的参数，和设置请求的token
       this.getParams();
       //this.getWarehouseData();
-      this.$axios.defaults.headers.common['token'] = this.token;
       //请求物品数据第一页
       this.currentChange(1);
       //请求，填充其他数据
+
+      //请求获取入库信息
+      this.getInstore(1);
 
     },
     watch: {
       //左边点击菜单栏那个显示，那个不显示函数
       el_menu_selected: function (val) {
         if (val === '1-1') {
-          let jQueryObject3 = $("#ReportDamages");
+          let jQueryObject4 = $("#ReportDamages");
+          jQueryObject4.css("display", "none");
+          let jQueryObject3 = $("#ProductManagerIn");
           jQueryObject3.css("display", "none");
-          let jQueryObject2 = $("#ProductManager");
+          let jQueryObject2 = $("#ProductManagerOut");
           jQueryObject2.css("display", "none");
           let jQueryObject1 = $("#HousewareMessage");
           jQueryObject1.css("display", "block");
         } else if (val === '1-2') {
-          let jQueryObject3 = $("#ReportDamages");
+          let jQueryObject4 = $("#ReportDamages");
+          jQueryObject4.css("display", "none");
+          let jQueryObject3 = $("#ProductManagerIn");
           jQueryObject3.css("display", "none");
           let jQueryObject1 = $("#HousewareMessage");
           jQueryObject1.css("display", "none");
-          let jQueryObject2 = $("#ProductManager");
+          let jQueryObject2 = $("#ProductManagerOut");
           jQueryObject2.css("display", "block");
         } else if (val === '1-3') {
           let jQueryObject1 = $("#HousewareMessage");
           jQueryObject1.css("display", "none");
+          let jQueryObject2 = $("#ProductManagerOut");
+          jQueryObject2.css("display", "none");
+          let jQueryObject4 = $("#ReportDamages");
+          jQueryObject4.css("display", "none");
+          let jQueryObject3 = $("#ProductManagerIn");
+          jQueryObject3.css("display", "block");
+        } else if (val === '1-4') {
+          let jQueryObject1 = $("#HousewareMessage");
+          jQueryObject1.css("display", "none");
           let jQueryObject2 = $("#ProductManager");
           jQueryObject2.css("display", "none");
+          let jQueryObject4 = $("#ProductManagerIn");
+          jQueryObject4.css("display", "none");
           let jQueryObject3 = $("#ReportDamages");
           jQueryObject3.css("display", "block");
         }

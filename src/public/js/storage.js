@@ -4,6 +4,9 @@ export const USERNAME_KEY = '__username__'
 export const IDENTIFY_KEY = '__identify__'
 export const ADDR_KEY = '__addr__'
 
+
+export const INSTORE_KEY = '__instore__'
+
 export default {
   get(key) {
     return window.sessionStorage.getItem(key)
