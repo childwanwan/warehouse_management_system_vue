@@ -10,6 +10,7 @@ Vue.prototype.$axios = axios
 
 let token = 'user';
 axios.defaults.headers.common['token'] = token;
+axios.defaults.withCredentials = true// 允许携带cookie信息
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

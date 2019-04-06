@@ -183,6 +183,8 @@
 
 <script>
   import $ from 'jquery'
+  import {login} from '../api'
+  import storage, { TOKEN_KEY, TELEPHONE_KEY, USERNAME_KEY,IDENTIFY_KEY,ADDR_KEY } from '../public/js/storage'
 
   export default {
     name: "Index",
@@ -209,11 +211,11 @@
         ck_code: '',
         ck_message: '提示信息',
         activeIndex: '1',
-        ipAddress:'',
+        ipAddress: '',
 
         ruleForm: {
-          username: '15797934717',
-          password: '123456789',
+          username: '15797934718',
+          password: '147852369',
           identify: '仓库管理员',
           securityCode: '',
         },
@@ -296,39 +298,47 @@
           //alert()
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              //alert('submit!');
-              //alert(this.ruleForm.username);
-              //var data = this.ruleForm;
-              //this.$http.post('http://api.wms.com/api/user/login')
-              /*this.$http.get('http://www.baidu.com',{}).then(() => {
-                this.$message.success("百度成功！")
+
+              let status = 9999;
+              if (this.ruleForm.identify == '仓库管理员') {
+                status = 3;
+              }
+              if (this.ruleForm.identify == '系统管理员') {
+                status = 4;
+              }
+              if (this.ruleForm.identify == '超级管理员') {
+                status = 5;
+              }
+              ///employee/login
+
+              let data = JSON.stringify({
+                'telephone': this.ruleForm.username,
+                'password': this.ruleForm.password,
+                'status': status
               })
-                .catch(() => {
-                  this.$message.error("百度失败！")
-                });*/
-              //var _json = jQuery.param({ "username": "password", "password": "20130209","identify":"123","securityCode":"123456" });
-              this.$axios.post('http://localhost:10010/api/logic/logic_controller/login',
-                {
-                  'username': this.ruleForm.username,
-                  'password': this.ruleForm.password,
-                  'identify': this.ruleForm.identify,
-                  'ip':this.ipAddress,
-                })
-                .then((res) => {
-                  console.log(res.data);//res.data['hello world']
-                  if (res.data['code'].toString()==='0') {
-                    this.$message.error(res.data['message']);
-                  }else if (res.data['code'].toString()==='-1'){
-                    this.$message.error(res.data['message']);
-                  }else if(res.data['code'].toString()==='1') {
-                    this.$message.success("登入成功！");
-                    console.log(res.data['data']['warehouseData']);
-                    //console.log(res.data['data']['userData']['0']['username']);
-                    this.$router.push({path:'/houseware_manager_login_success',query:{tel:this.ruleForm.username,token:this.ruleForm.username,identify:this.ruleForm.identify,
-                       username:res.data['data']['userData']['0']['username'],supportTimes:res.data['data']['userData'][0]['likeCount'],warehouseID:res.data['data']['warehouseData']['id'],
-                      warehouse:res.data['data']['warehouseData']}});
-                  }else this.$message.error(res.data['message']);
-                })
+
+              //this.submitText = '登录中...'
+              login(data).then((res) => {
+                console.log(res);
+                //console.log(res.retCode);//res.data['hello world']
+                if (res.retCode.toString() === '1') {
+                  if (this.ruleForm.identify === '仓库管理员') {
+                    //console.log(res.data['employeeName']);
+                    let sessionId = res.sessionId;
+                    let telephone = res.data['telephone'];
+                    let employeeName = res.data['employeeName'];
+                    let identify = this.ruleForm.identify;
+                    let addr = res.data['addr'];
+                    let dataParam = {sessionId,telephone,employeeName,identify,addr};
+                    //console.log(dataParam);
+                    this.loginSuccess(dataParam);
+                    //loginSuccess(dataParam);
+                    this.$router.push({
+                      path: '/houseware_manager_login_success'
+                    });
+                  }
+                } else this.$message.error(res.data['message']);
+              })
                 .catch((res) => {
                   //console.log(res.data);
                   //this.$message.error("请求失败！")
@@ -353,6 +363,15 @@
           code += random[index];//根据索引取得随机数加到code上
         }
         this.ck_code = code;//把code值赋给验证码
+      },
+      loginSuccess(data) {
+        let {sessionId, telephone, employeeName,identify,addr} = data;
+        storage.set(TOKEN_KEY, sessionId);
+        storage.set(TELEPHONE_KEY, telephone);
+        storage.set(USERNAME_KEY, employeeName);
+        storage.set(IDENTIFY_KEY, identify);
+        storage.set(ADDR_KEY, addr);
+
       },
     },
     created() {
