@@ -257,7 +257,7 @@
           style="width: 100%">
           <el-table-column
             prop="provideId"
-            label="物品出手人"
+            label="物品提供人"
             width="252"
             align="center">
           </el-table-column>
@@ -286,8 +286,10 @@
             align="center">
 
             <template slot-scope="scope">　
-            <el-button type="primary" style="width: 70%;text-align: center;margin-left: 5%;height: 45px" @click="showDetail(scope.$index, scope.row)">查询详情</el-button>　　　　　
-            <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
+            <el-button type="primary" style="width: 30%;text-align: center;margin-left: -35%;height: 25px" @click="showDetail(scope.$index, scope.row)">查询详情</el-button>　　　　　
+
+              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px" @click="deleteInstore(scope.$index, scope.row)">删除</el-button>
+              <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
             <!--<button style="width: 80px !important;">出库</button>-->
             </template>
           </el-table-column>
@@ -300,6 +302,13 @@
             :total="count"
             :page-count="allPage">
           </el-pagination>
+        </div>
+
+        <!--入库增加栏-->
+        <div data-v-f81d8020="" style="width: 80%;margin-left: 10%;margin-top: 5%">
+          <p style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;" @click="addInstore">
+            <span style="color: #909399">+ 添加入库单</span>
+          </p>
         </div>
 
 
@@ -317,6 +326,7 @@
   import {getGoodsBygoodsName} from '../api'
   import {getInstore} from '../api'
   import {getEmployeeById} from '../api'
+  import {deleteInstore} from  '../api'
   import storage, {TOKEN_KEY, TELEPHONE_KEY, USERNAME_KEY, IDENTIFY_KEY, ADDR_KEY,INSTORE_KEY} from '../public/js/storage'
   import {timeFormate} from '../public/js/dateUtils'
 
@@ -655,12 +665,51 @@
       inStoreCurrentChange:function () {
 
       },
+      //查询详情
       showDetail:function (index, row) {
         storage.set(INSTORE_KEY,row.id);
         this.$router.push({
           path: '/instoreDetail'
         });
         //console.log(row);
+
+      },
+
+      //添加入库单
+      addInstore:function () {
+        this.$router.push({
+          path: '/addInstore'
+        });
+      },
+
+
+      deleteInstore:function (index, row) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let data = JSON.stringify({
+            instoreId:row.id,
+          });
+          deleteInstore(data).then((response) => {
+            //console.log(res.retCode);//res.data['hello world']
+            if (response.retCode === 1) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.instore.pop(index);
+            } else this.$message.error(response.retMsg);
+          }).catch(function (error) {
+            console.log(error);
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
 
       }
     },

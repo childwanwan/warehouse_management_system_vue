@@ -75,6 +75,36 @@ export function getGoodsById(data) {
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
+/*------------------------------------根据id删除入库单------------------------------------*/
+export function deleteInstore(data) {
+  const url = '/instore/delete'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+export function getGoodsDicMessage(data) {
+  const url = '/goodsDic/query'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+export function getGoodsByGoodsCode(data) {
+  const url = '/goods/getGoodsByGoodsCode'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+export function getEmployees() {
+  const url = '/employee/getEmployees'
+  return adminHttp().get(url).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+export function insertInstore(data) {
+  const url = '/instore/insert'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
 
 /*---------------------------------管理员请求的接口------------------------------------*/
 

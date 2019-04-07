@@ -8,6 +8,7 @@ import Wms_manager_home from '../components/Wms_manager_home'
 import Houseware_manager_login_success from '../components/Houseware_manager_login_success'
 import HousewareMessage from '../components/HousewareMessage'
 import InstoreDetail from '../components/InstoreDetail'
+import AddInstore from  '../components/AddInstore'
 
 Vue.use(Router)
 
@@ -21,5 +22,6 @@ export default new Router({
     {path: '/HousewareMessage', name: 'HosewareMessage', component: HousewareMessage},
 
     {path: '/InstoreDetail', name: 'InstoreDetail', component: InstoreDetail},
+    {path: '/AddInstore', name: 'AddInstore', component: AddInstore},
   ]
 })
