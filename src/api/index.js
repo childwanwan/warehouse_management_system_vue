@@ -3,7 +3,7 @@ import storage, { TOKEN_KEY } from './../public/js/storage';
 
 //export const apiDomain = 'https://i-code.top/qs'
 //export const apiDomain = 'http://120.78.132.185:8050/qs'
-export const apiDomain = 'http://localhost:8080/'
+export const apiDomain = 'http://localhost:8880/'
 //const baseURL = `${apiDomain}/api/v1`
 const baseURL = `${apiDomain}`
 
@@ -81,29 +81,85 @@ export function deleteInstore(data) {
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
-/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+/*------------------------------------查询数据字典------------------------------------*/
 export function getGoodsDicMessage(data) {
   const url = '/goodsDic/query'
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
-/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+/*------------------------------------根据goodsCode查询goods------------------------------------*/
 export function getGoodsByGoodsCode(data) {
   const url = '/goods/getGoodsByGoodsCode'
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
-/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+/*------------------------------------根据goodsCode查询goods------------------------------------*/
+export function getGoodsByCondition(data) {
+  const url = '/goods/getGoodsByCondition'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+
+/*------------------------------------获取所有职工信息------------------------------------*/
 export function getEmployees() {
   const url = '/employee/getEmployees'
   return adminHttp().get(url).then(res => Promise.resolve(res.data))
 }
 
-/*------------------------------------根据goodsCode查询数据字典------------------------------------*/
+/*------------------------------------入库------------------------------------*/
 export function insertInstore(data) {
   const url = '/instore/insert'
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
+
+
+/*------------------------------------根据id删除出库单------------------------------------*/
+export function deleteOutstoresById(data) {
+  const url = '/outstore/deleteOutstoresById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------查询出库单------------------------------------*/
+export function getOutstores() {
+  const url = '/outstore/getOutstores'
+  return adminHttp().get(url).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------查询出库单------------------------------------*/
+export function insertOutstore(data) {
+  const url = '/outstore/addOutstore'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------查询出库单------------------------------------*/
+export function getDamages(data) {
+  const url = '/damage/query'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------报损------------------------------------*/
+export function insertDamage(data) {
+  const url = '/damage/report'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据id获取报损单------------------------------------*/
+export function getDamageById(data) {
+  const url = '/damage/queryById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /*---------------------------------管理员请求的接口------------------------------------*/

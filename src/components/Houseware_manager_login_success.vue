@@ -168,8 +168,8 @@
               @current-change="currentChange"
               background
               layout="prev, pager, next"
-              :total="count"
-              :page-count="allPage">
+              :total="this.allPage*10"
+            >
             </el-pagination>
           </div>
         </div>
@@ -196,48 +196,65 @@
           border
           style="width: 100%">
           <el-table-column
-            prop="goodsCode"
-            label="物品编码"
-            width="180"
+            prop="providerId"
+            label="物品提供人"
+            width="252"
             align="center">
           </el-table-column>
           <el-table-column
-            prop="goodsType"
-            label="物品类型"
+            prop="reserveId"
+            label="物品接收人"
             align="center"
-            width="180">
+            width="252">
           </el-table-column>
           <el-table-column
-            prop="goodsName"
-            label="物品名称"
-            width="180"
+            prop="outstoreTime"
+            label="出库时间"
+            width="252"
             align="center">
           </el-table-column>
           <el-table-column
-            prop="specificationItems"
-            label="规格"
-            width="180"
+            prop="totalNum"
+            label="物品总数量"
+            width="252"
             align="center">
           </el-table-column>
           <el-table-column
-            prop="customAttributeItems"
-            label="自定义规格"
-            width="180"
+            prop=""
+            label="操作"
+            width="252"
             align="center">
-          </el-table-column>
-          <el-table-column
-            prop="comment"
-            label="物品描述"
-            width="180"
-            align="center">
-          </el-table-column>
-          <el-table-column
-            prop="goodsNum"
-            label="物品数量"
-            width="180"
-            align="center">
+
+            <template slot-scope="scope">　
+              <el-button type="primary" style="width: 30%;text-align: center;margin-left: -35%;height: 25px"
+                         @click="showOutDetail(scope.$index, scope.row)">查询详情
+              </el-button>
+              　　　　　
+              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+                         @click="deleteOutstore(scope.$index, scope.row)">删除
+              </el-button>
+              <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
+              <!--<button style="width: 80px !important;">出库</button>-->
+            </template>
           </el-table-column>
         </el-table>
+        <div style="text-align: center;margin-top: 30px;">
+          <el-pagination
+            @current-change="outStoreCurrentChange"
+            background
+            layout="prev, pager, next"
+            :total="outstoreAllPage*10">
+          </el-pagination>
+        </div>
+
+        <!--出库增加栏-->
+        <div data-v-f81d8020="" style="width: 80%;margin-left: 10%;margin-top: 5%">
+          <p
+            style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;"
+            @click="addOutstore">
+            <span style="color: #909399">+ 添加出库单</span>
+          </p>
+        </div>
 
 
       </div>
@@ -286,11 +303,16 @@
             align="center">
 
             <template slot-scope="scope">　
-            <el-button type="primary" style="width: 30%;text-align: center;margin-left: -35%;height: 25px" @click="showDetail(scope.$index, scope.row)">查询详情</el-button>　　　　　
+              <el-button type="primary" style="width: 30%;text-align: center;margin-left: -35%;height: 25px"
+                         @click="showDetail(scope.$index, scope.row)">查询详情
+              </el-button>
+              　　　　　
 
-              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px" @click="deleteInstore(scope.$index, scope.row)">删除</el-button>
+              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+                         @click="deleteInstore(scope.$index, scope.row)">删除
+              </el-button>
               <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
-            <!--<button style="width: 80px !important;">出库</button>-->
+              <!--<button style="width: 80px !important;">出库</button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -299,23 +321,105 @@
             @current-change="inStoreCurrentChange"
             background
             layout="prev, pager, next"
-            :total="count"
-            :page-count="allPage">
+            :total="instoreAllPage*10">
           </el-pagination>
         </div>
 
         <!--入库增加栏-->
         <div data-v-f81d8020="" style="width: 80%;margin-left: 10%;margin-top: 5%">
-          <p style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;" @click="addInstore">
+          <p
+            style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;"
+            @click="addInstore">
             <span style="color: #909399">+ 添加入库单</span>
           </p>
         </div>
 
+      </div>
+
+      <!--仓库报损管理-->
+      <div id="ReportDamages" class="ReportDamages" style="display: none">
+
+        <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库报损管理</div>
+
+        <el-table
+          :data="damage"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="damageName"
+            label="报损单名称"
+            width="216"
+            align="center">
+          </el-table-column>
+
+          <!--<el-table-column-->
+            <!--prop="damageType"-->
+            <!--label="报损单类型"-->
+            <!--width="180"-->
+            <!--align="center">-->
+          <!--</el-table-column>-->
+
+
+          <el-table-column
+            prop="createPersonId"
+            label="报损单创建人"
+            align="center"
+            width="216">
+          </el-table-column>
+          <el-table-column
+            prop="checkPersonId"
+            label="报损单审核人"
+            width="216"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="创建时间"
+            width="210"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="approvalTime"
+            label="审核时间"
+            width="200"
+            align="center">
+          </el-table-column>
+
+          <el-table-column
+            prop=""
+            label="操作"
+            width="200"
+            align="center">
+            <template slot-scope="scope">　
+              <el-button type="primary" style="width: 50%;text-align: center;;height: 25px"
+                         @click="showDamageDetail(scope.$index, scope.row)">查询详情
+              </el-button>
+              <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
+              <!--<button style="width: 80px !important;">出库</button>-->
+            </template>
+          </el-table-column>
+
+        </el-table>
+        <div style="text-align: center;margin-top: 30px;">
+          <el-pagination
+            @current-change="damageCurrentChange"
+            background
+            layout="prev, pager, next"
+            :total="damageAllPage*10">
+          </el-pagination>
+        </div>
+
+        <!--报损单增加栏-->
+        <div data-v-f81d8020="" style="width: 80%;margin-left: 10%;margin-top: 5%">
+          <p
+            style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;"
+            @click="addDamage">
+            <span style="color: #909399">+ 添加报损单</span>
+          </p>
+        </div>
 
 
       </div>
-
-      <div id="ReportDamages" class="ReportDamages" style="display: none">仓库报损管理</div>
     </div>
   </div>
 </template>
@@ -326,12 +430,27 @@
   import {getGoodsBygoodsName} from '../api'
   import {getInstore} from '../api'
   import {getEmployeeById} from '../api'
-  import {deleteInstore} from  '../api'
-  import storage, {TOKEN_KEY, TELEPHONE_KEY, USERNAME_KEY, IDENTIFY_KEY, ADDR_KEY,INSTORE_KEY} from '../public/js/storage'
+  import {deleteInstore} from '../api'
+  import {deleteOutstoresById} from '../api'
+  import {getOutstores} from '../api'
+  import {getDamages} from '../api'
+  import {getEmployees} from '../api'
+  import storage, {
+    TOKEN_KEY,
+    TELEPHONE_KEY,
+    USERNAME_KEY,
+    IDENTIFY_KEY,
+    ADDR_KEY,
+    INSTORE_KEY,
+    OUTSTORE_KEY,
+    DAMAGE_KEY
+  } from '../public/js/storage'
   import {timeFormate} from '../public/js/dateUtils'
 
+  const allEmployee = [];
   export default {
     name: "Houseware_manager_login_success",
+
     data() {
       return {
         //后台带回
@@ -358,60 +477,16 @@
         searchByName: '',
 
         //仓库物品信息
-        productMessagetableData: [
-          // {
-          //   ID: '',
-          //   name: '',
-          //   createTime: '',
-          //   damagedCondition: '',
-          //   goodsDescription: '',
-          //   price: '',
-          //   updateTime: ''
-          // },
-          // {
-          //   ID: '',
-          //   name: '',
-          //   createTime: '',
-          //   damagedCondition: '',
-          //   goodsDescription: '',
-          //   price: '',
-          //   updateTime: ''
-          // },
-          // {
-          //   ID: '',
-          //   name: '',
-          //   createTime: '',
-          //   damagedCondition: '',
-          //   goodsDescription: '',
-          //   price: '',
-          //   updateTime: ''
-          // },
-          // {
-          //   ID: '',
-          //   name: '',
-          //   createTime: '',
-          //   damagedCondition: '',
-          //   goodsDescription: '',
-          //   price: '',
-          //   updateTime: ''
-          // },
-          // {
-          //   ID: '',
-          //   name: '',
-          //   createTime: '',
-          //   damagedCondition: '',
-          //   goodsDescription: '',
-          //   price: '',
-          //   updateTime: ''
-          // }
-        ],
+        productMessagetableData: [],
         //入库单
+        allInstore: [],
         instore: [],
         instorePageSize: 5,
         instoreCount: 0,
         instoreCurrentPage: 0,
         instoreAllPage: 0,
         //出库单
+        allOutStore: [],
         outstore: [],
         outstorePageSize: 5,
         outstoreCount: 0,
@@ -419,14 +494,29 @@
         outstoreAllPage: 0,
         //存查询返回的所有数据
         allGoods: [],
+        //模糊查询的goods
+        conditionGoods: [],
+
+        //报损展示数据
+        damage: [],
+        //报损所有数据
+        allDamage: [],
+
+        damagePageSize: 5,
+        damageCount: 0,
+        damageCurrentPage: 0,
+        damageAllPage: 0,
 
         //提示内容
         kindlyReminder: '您所管辖仓库即将会有物品出入库，忘您留心。',
         //接一个对象
         getObj: {},
+
+
       }
     },
     methods: {
+
       select1_1: function () {
         this.el_menu_selected = '1-1';
       },
@@ -442,79 +532,109 @@
 
       //改变页数所触发的函数
       currentChange: function (val) {
-        this.searchByName = '';
+        //this.searchByName = '';
         //alert("折哦度没进来" + val);
         //console.log(this.productMessagetableData);
         this.currentPage = val;
         //this.$axios.defaults.headers.common['token'] = this.token;
         //
-        getAllgoods().then((response) => {
-          console.log(response);
-          //console.log(response.data['data']['count']);
-          if (response.retCode === 1) {
-            this.allGoods = response.data;
-            this.count = response.data.length;
-            if (this.count > this.pageSize) {
-              this.allPage = parseInt(this.count / this.pageSize) + 1;
-              //数组赋值
-              for (let i = 0; i < this.pageSize; i++) {
-                this.productMessagetableData.push(response.data[i]);
-              }
-            } else {
-              this.allPage = 1;
-              for (let i = 0; i < this.count; i++) {
-                this.productMessagetableData.push(response.data[i]);
-              }
+        if (this.searchByName === '') {
+          if (val > 1) {
+            this.productMessagetableData = [];
+            //console.log(this.productMessagetableData);
+            //数组赋值
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+              this.productMessagetableData.push(this.allGoods[i]);
             }
-            // console.log(this.productMessagetableData);
-            //
-            //
-            // this.pageSize = 5;
-            //
-            //
-            // this.count = this.allPage * 10;
-            // console.log(this.allPage + " " + this.count);
-            //
-            // if (this.currentPage > parseInt(response.data['data']['count'] / this.pageSize)) {
-            //   for (let i = 0; i < this.pageSize; i++) {
-            //     this.productMessagetableData[i].ID = '';
-            //     this.productMessagetableData[i].name = '';
-            //     //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-            //     this.productMessagetableData[i].createTime = '';
-            //     this.productMessagetableData[i].damagedCondition = '';
-            //     this.productMessagetableData[i].goodsDescription = '';
-            //     this.productMessagetableData[i].price = '';
-            //     this.productMessagetableData[i].updateTime = '';
-            //   }
-            //   this.pageSize = response.data['data']['count'] % this.pageSize;
-            //   console.log(this.pageSize);
-            //
-            // }
-            // //数据赋值
-            // console.log(response);
-            // //this.productMessagetableData=null;
-            //
-            //
-            // for (let i = 0; i < this.pageSize; i++) {
-            //
-            //   this.productMessagetableData[i].ID = response.data['data']['data'][i]['id'].toString();
-            //   this.productMessagetableData[i].name = response.data['data']['data'][i]['name'].toString();
-            //   //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-            //   this.productMessagetableData[i].createTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
-            //   this.productMessagetableData[i].damagedCondition = response.data['data']['data'][i]['damagedCondition'];
-            //   this.productMessagetableData[i].goodsDescription = response.data['data']['data'][i]['goodsDescription'];
-            //   this.productMessagetableData[i].price = response.data['data']['data'][i]['price'];
-            //   this.productMessagetableData[i].updateTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
-            // }
-            // this.pageSize = 5;
           } else {
-            //this.productMessagetableData.push();
-            this.$message.error(response.retMsg);
+
+            getAllgoods().then((response) => {
+              //console.log(response);
+              //console.log(response.data['data']['count']);
+              if (response.retCode === 1) {
+                this.allGoods = response.data;
+                this.count = response.data.length;
+                this.productMessagetableData = [];
+                if (this.count > this.pageSize) {
+                  if (this.count % this.pageSize === 0) {
+                    this.allPage = this.count / this.pageSize;
+                  } else {
+                    this.allPage = parseInt(this.count / this.pageSize) + 1;
+                  }
+                  //数组赋值
+                  for (let i = 0; i < this.pageSize; i++) {
+                    this.productMessagetableData.push(response.data[i]);
+                  }
+                } else {
+                  this.allPage = 1;
+                  for (let i = 0; i < this.count; i++) {
+                    this.productMessagetableData.push(response.data[i]);
+                  }
+                }
+                //console.log(this.count);
+                // console.log(this.allPage);
+                // console.log(this.productMessagetableData);
+                //
+                //
+                // this.pageSize = 5;
+                //
+                //
+                // this.count = this.allPage * 10;
+                // console.log(this.allPage + " " + this.count);
+                //
+                // if (this.currentPage > parseInt(response.data['data']['count'] / this.pageSize)) {
+                //   for (let i = 0; i < this.pageSize; i++) {
+                //     this.productMessagetableData[i].ID = '';
+                //     this.productMessagetableData[i].name = '';
+                //     //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
+                //     this.productMessagetableData[i].createTime = '';
+                //     this.productMessagetableData[i].damagedCondition = '';
+                //     this.productMessagetableData[i].goodsDescription = '';
+                //     this.productMessagetableData[i].price = '';
+                //     this.productMessagetableData[i].updateTime = '';
+                //   }
+                //   this.pageSize = response.data['data']['count'] % this.pageSize;
+                //   console.log(this.pageSize);
+                //
+                // }
+                // //数据赋值
+                // console.log(response);
+                // //this.productMessagetableData=null;
+                //
+                //
+                // for (let i = 0; i < this.pageSize; i++) {
+                //
+                //   this.productMessagetableData[i].ID = response.data['data']['data'][i]['id'].toString();
+                //   this.productMessagetableData[i].name = response.data['data']['data'][i]['name'].toString();
+                //   //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
+                //   this.productMessagetableData[i].createTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
+                //   this.productMessagetableData[i].damagedCondition = response.data['data']['data'][i]['damagedCondition'];
+                //   this.productMessagetableData[i].goodsDescription = response.data['data']['data'][i]['goodsDescription'];
+                //   this.productMessagetableData[i].price = response.data['data']['data'][i]['price'];
+                //   this.productMessagetableData[i].updateTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
+                // }
+                // this.pageSize = 5;
+              } else {
+                //this.productMessagetableData.push();
+                this.$message.error(response.retMsg);
+              }
+            })
+              .catch(function (error) {
+                console.log(error);
+              })
           }
-        })
-          .catch(function (error) {
-            console.log(error);
-          })
+        } else {
+          if (val > 1) {
+            this.productMessagetableData = [];
+            //console.log(this.productMessagetableData);
+            //数组赋值
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+              this.productMessagetableData.push(this.conditionGoods[i]);
+            }
+          } else {
+            this.selectByName();
+          }
+        }
       },
       getParams: function () {
         // 取到登入带过来的参数
@@ -572,17 +692,19 @@
           'goodsName': this.searchByName,
         })
         getGoodsBygoodsName(data).then((res) => {
-          console.log(res);
+          //console.log(res);
           //console.log(res.retCode);//res.data['hello world']
           if (res.retCode === 1) {
-            console.log(res.data);
-
-
-            this.allGoods = res.data;
+            //console.log(res.data);
+            this.conditionGoods = res.data;
             this.count = res.data.length;
             this.productMessagetableData = [];
             if (this.count > this.pageSize) {
-              this.allPage = parseInt(this.count / this.pageSize) + 1;
+              if (this.count % this.pageSize === 0) {
+                this.allPage = parseInt(this.count / this.pageSize);
+              } else {
+                this.allPage = parseInt(this.count / this.pageSize) + 1;
+              }
               //数组赋值
               for (let i = 0; i < this.pageSize; i++) {
                 this.productMessagetableData.push(res.data[i]);
@@ -604,93 +726,137 @@
       //获取入库信息
       getInstore: function (val) {
         this.instoreCurrentPage = val;
-        let data = JSON.stringify({
-            "id":"",
-        })
-        getInstore(data).then((res) => {
-          console.log(res);
-          //console.log(res.retCode);//res.data['hello world']
-          if (res.retCode === 1) {
-            this.instoreCount = res.instores.length;
-            this.instoreAllPage = parseInt(this.instoreCount / this.instorePageSize) + 1;
+        if (this.allInstore.length > 0) {
+          this.instore = [];
+          for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+            this.instore.push(this.allInstore[i]);
+          }
+        } else {
+          let data = JSON.stringify({
+            "id": "",
+          })
 
-
-            //解析修改值
-            for (let i = 0; i < this.instoreCount; i++) {
-              //转出手人id
-              let dataId = JSON.stringify({
-                "id":res.instores[i]['provideId'],
-              })
-              getEmployeeById(dataId).then((response) => {
-                //console.log(res.retCode);//res.data['hello world']
-                if (response.retCode === 1) {
-                  res.instores[i]['provideId'] = response.data.employeeName;
-                } else this.$message.error(response.retMsg);
-              }).catch(function (error) {
-                console.log(error);
-              })
-              //转接收人id
-              let dataReserveId = JSON.stringify({
-                "id":res.instores[i]['reserverId'],
-              })
-              getEmployeeById(dataReserveId).then((response) => {
-                //console.log(res.retCode);//res.data['hello world']
-                if (response.retCode === 1) {
-                  res.instores[i]['reserverId'] = response.data.employeeName;
-                } else this.$message.error(response.retMsg);
-              }).catch(function (error) {
-                console.log(error);
-              })
-              //转时间
-              var date = new Date(res.instores[i]['instoreTime'].time);
-              res.instores[i]['instoreTime'] = timeFormate(date);
-            }
-
-            if (this.instorePageSize < this.instoreCount) {
-              for (let i = 0; i < this.instorePageSize; i++) {
-                this.instore.push(res.instores[i]);
+          getInstore(data).then((res) => {
+            //console.log(res);
+            //console.log(res.retCode);//res.data['hello world']
+            if (res.retCode === 1) {
+              this.instoreCount = res.instores.length;
+              if (this.instoreCount % this.instorePageSize === 0) {
+                this.instoreAllPage = parseInt(this.instoreCount / this.instorePageSize);
+              } else {
+                this.instoreAllPage = parseInt(this.instoreCount / this.instorePageSize) + 1;
               }
-            } else {
-              this.instoreAllPage = 1;
+
+              //解析修改值
               for (let i = 0; i < this.instoreCount; i++) {
-                this.instore.push(res.instores[i]);
+                //转出手人id
+
+                let provideId = JSON.stringify({
+                  "id": res.instores[i]['provideId'],
+                })
+                getEmployeeById(provideId).then((response) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (response.retCode === 1) {
+                    res.instores[i]['provideId'] = response.data.employeeName;
+                  } else this.$message.error(response.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+
+                // if (globleVariable.allEmployee.length<1){
+                //   this.getAllEmployee();
+                // }
+                // console.log(this.allEmployee,1);
+                // for (let i = 0; i < globleVariable.allEmployee.length; i++) {
+                //   if (res.instores[i]['provideId'] == globleVariable.allEmployee[i].id) {
+                //     res.instores[i]['provideId'] = globleVariable.allEmployee.employeeName;
+                //   }
+                // }
+                //转接收人id
+                let dataReserveId = JSON.stringify({
+                  "id": res.instores[i]['reserverId'],
+                })
+                getEmployeeById(dataReserveId).then((response) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (response.retCode === 1) {
+                    res.instores[i]['reserverId'] = response.data.employeeName;
+                  } else this.$message.error(response.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+                //转时间
+                var date = new Date(res.instores[i]['instoreTime'].time);
+                res.instores[i]['instoreTime'] = timeFormate(date);
               }
-            }
-          } else this.$message.error(res.retMsg);
-        }).catch(function (error) {
-          console.log(error);
-        })
+
+              this.allInstore = res.instores;
+
+              if (val === 1) {
+                if (this.instorePageSize < this.instoreCount) {
+                  for (let i = 0; i < this.instorePageSize; i++) {
+                    this.instore.push(res.instores[i]);
+                  }
+                } else {
+                  this.instoreAllPage = 1;
+                  for (let i = 0; i < this.instoreCount; i++) {
+                    this.instore.push(res.instores[i]);
+                  }
+                }
+              } else {
+                this.instore = [];
+                for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+                  this.instore.push(res.instores[i]);
+                }
+              }
+            } else this.$message.error(res.retMsg);
+          }).catch(function (error) {
+            console.log(error);
+          })
+        }
       },
       //入库分页
-      inStoreCurrentChange:function () {
-
+      inStoreCurrentChange: function (val) {
+        this.getInstore(val);
       },
-      //查询详情
-      showDetail:function (index, row) {
-        storage.set(INSTORE_KEY,row.id);
+      //入库单查询详情
+      showDetail: function (index, row) {
+        storage.set(INSTORE_KEY, row.id);
         this.$router.push({
           path: '/instoreDetail'
         });
         //console.log(row);
 
       },
+      //报损单查看详情
+      showDamageDetail:function(index,row){
+        storage.set(DAMAGE_KEY,row.id);
+        this.$router.push({path:'/damageDetail'});
+      },
 
       //添加入库单
-      addInstore:function () {
+      addInstore: function () {
         this.$router.push({
           path: '/addInstore'
         });
       },
 
 
-      deleteInstore:function (index, row) {
+      //添加入库单
+      addOutstore: function () {
+        this.$router.push({
+          path: '/addOutstore'
+        });
+      },
+
+      //删除入库单
+      deleteInstore: function (index, row) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           let data = JSON.stringify({
-            instoreId:row.id,
+            instoreId: row.id,
           });
           deleteInstore(data).then((response) => {
             //console.log(res.retCode);//res.data['hello world']
@@ -711,6 +877,292 @@
           });
         });
 
+      },
+
+      //出库单查看详情
+      showOutDetail: function (index, row) {
+        storage.set(OUTSTORE_KEY, row.id);
+        this.$router.push({
+          path: '/outstoreDetail'
+        });
+        //console.log(row);
+
+      },
+      //删除出库单
+      deleteOutstore: function (index, row) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let data = JSON.stringify({
+            outstoreId: row.id,
+          });
+          deleteOutstoresById(data).then((response) => {
+            //console.log(res.retCode);//res.data['hello world']
+            if (response.retCode === 1) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.outstore.pop(index);
+            } else this.$message.error(response.retMsg);
+          }).catch(function (error) {
+            console.log(error);
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
+      },
+
+      //出库单获取
+      outStoreCurrentChange: function (val) {
+        this.outstoreCurrentPage = val;
+        if (val == 1 && this.allOutStore.length == 0) {
+          this.outstore = [];
+          getOutstores().then((response) => {
+            //console.log(response.data);
+            if (response.retCode === 1) {
+              //this.allOutStore = response.data;
+              //解析修改值
+              for (let i = 0; i < response.data.length; i++) {
+                //转出手人id
+                let dataId = JSON.stringify({
+                  "id": response.data[i]['providerId'],
+                })
+                getEmployeeById(dataId).then((res) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (res.retCode === 1) {
+                    response.data[i]['providerId'] = res.data.employeeName;
+                  } else this.$message.error(response.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+                //转接收人id
+                let dataReserveId = JSON.stringify({
+                  "id": response.data[i]['reserveId'],
+                })
+                getEmployeeById(dataReserveId).then((res) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (res.retCode === 1) {
+                    response.data[i]['reserveId'] = res.data.employeeName;
+                  } else this.$message.error(response.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+                //转时间
+                var date = new Date(response.data[i]['outstoreTime'].time);
+                response.data[i]['outstoreTime'] = timeFormate(date);
+              }
+              //console.log(response.data);
+              this.allOutStore = response.data;
+
+              if (this.allOutStore.length % this.outstorePageSize === 0) {
+                this.outstoreAllPage = this.allOutStore.length / this.outstorePageSize;
+              } else {
+                this.outstoreAllPage = parseInt(this.allOutStore.length / this.outstorePageSize) + 1;
+              }
+              //console.log(this.outstoreAllPage);
+              this.outstoreCount = this.allOutStore.length;
+
+              if (this.outstoreCount > this.outstorePageSize) {
+                for (let i = (val - 1) * this.outstorePageSize; i < val * this.outstorePageSize && i < this.outstoreCount; i++) {
+                  this.outstore.push(this.allOutStore[i]);
+                }
+                //console.log(val * this.outstorePageSize);
+              } else {
+                for (let i = 0; i < this.outstoreCount; i++) {
+                  this.outstore.push(this.allOutStore[i]);
+                }
+              }
+            } else this.$message.error(response.retMsg);
+          }).catch(function (error) {
+            console.log(error);
+          });
+
+        } else {
+          this.outstore = [];
+          if (this.outstoreCount > this.outstorePageSize) {
+            for (let i = (val - 1) * this.outstorePageSize; i < val * this.outstorePageSize && i < this.outstoreCount; i++) {
+              this.outstore.push(this.allOutStore[i]);
+            }
+          } else {
+            for (let i = 0; i < this.outstoreCount; i++) {
+              this.outstore.push(this.allOutStore[i]);
+            }
+          }
+        }
+      },
+
+      //报损单更改页数
+      damageCurrentChange: function (val) {
+
+
+        this.damageCurrentPage = val;
+        if (val == 1 && this.allDamage.length == 0) {
+          this.damage = [];
+          let data = JSON.stringify({"": ""});
+          getDamages(data).then((response) => {
+            console.log(response.damages);
+            if (response.retCode === 1) {
+              for (let i = 0; i < response.damages.length; i++) {
+                if (response.damages[i].deep == 0) {
+                  response.damages[i].deep = "普通";
+                } else {
+                  response.damages[i].deep = "紧急";
+                }
+
+                //转创建人id
+                let createPersonId = JSON.stringify({
+                  "id": response.damages[i]['createPersonId'],
+                })
+                getEmployeeById(createPersonId).then((res) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (res.retCode === 1) {
+                    response.damages[i]['createPersonId'] = res.data.employeeName;
+                  } else this.$message.error(res.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+
+                //转审核人id
+                let checkPersonId = JSON.stringify({
+                  "id": response.damages[i]['checkPersonId'],
+                })
+                getEmployeeById(checkPersonId).then((res) => {
+                  //console.log(res.retCode);//res.data['hello world']
+                  if (res.retCode === 1) {
+                    response.damages[i]['checkPersonId'] = res.data.employeeName;
+                  } else this.$message.error(res.retMsg);
+                }).catch(function (error) {
+                  console.log(error);
+                })
+
+                //转时间
+                var date = new Date(response.damages[i]['createTime'].time);
+                response.damages[i]['createTime'] = timeFormate(date);
+                //console.log(JSON.stringify(response.damages[i]['approvalTime']));
+                if (JSON.stringify(response.damages[i]['approvalTime']) != "{}") {
+                  var date1 = new Date(response.damages[i]['approvalTime'].time);
+                  response.damages[i]['approvalTime'] = timeFormate(date1);
+                } else {
+                  response.damages[i]['approvalTime'] = '';
+                }
+
+              }
+              this.allDamage = response.damages;
+
+              if (this.allDamage.length % this.damagePageSize === 0) {
+                this.damageAllPage = this.allDamage.length / this.damagePageSize;
+              } else {
+                this.damageAllPage = parseInt(this.allDamage.length / this.damagePageSize) + 1;
+              }
+              this.damageCount = this.allDamage.length;
+
+              if (this.damageCount > this.damagePageSize) {
+                  for (let i = (val - 1) * this.damagePageSize; i < val * this.damagePageSize && i < this.damageCount; i++) {
+                    this.damage.push(this.allDamage[i]);
+                  }
+                  //console.log(val * this.outstorePageSize);
+                } else {
+                  for (let i = 0; i < this.damageCount; i++) {
+                    this.damage.push(this.allDamage[i]);
+                  }
+                }
+              //解析修改值
+              // for (let i = 0; i < response.data.length; i++) {
+              //   //转出手人id
+              //   let dataId = JSON.stringify({
+              //     "id": response.data[i]['providerId'],
+              //   })
+              //   getEmployeeById(dataId).then((res) => {
+              //     //console.log(res.retCode);//res.data['hello world']
+              //     if (res.retCode === 1) {
+              //       response.data[i]['providerId'] = res.data.employeeName;
+              //     } else this.$message.error(response.retMsg);
+              //   }).catch(function (error) {
+              //     console.log(error);
+              //   })
+              //   //转接收人id
+              //   let dataReserveId = JSON.stringify({
+              //     "id": response.data[i]['reserveId'],
+              //   })
+              //   getEmployeeById(dataReserveId).then((res) => {
+              //     //console.log(res.retCode);//res.data['hello world']
+              //     if (res.retCode === 1) {
+              //       response.data[i]['reserveId'] = res.data.employeeName;
+              //     } else this.$message.error(response.retMsg);
+              //   }).catch(function (error) {
+              //     console.log(error);
+              //   })
+              //   //转时间
+              //   var date = new Date(response.data[i]['outstoreTime'].time);
+              //   response.data[i]['outstoreTime'] = timeFormate(date);
+              // }
+              // //console.log(response.data);
+              // this.allOutStore = response.data;
+              //
+              // if (this.allOutStore.length % this.outstorePageSize === 0) {
+              //   this.outstoreAllPage = this.allOutStore.length / this.outstorePageSize;
+              // } else {
+              //   this.outstoreAllPage = parseInt(this.allOutStore.length / this.outstorePageSize) + 1;
+              // }
+              // //console.log(this.outstoreAllPage);
+              // this.outstoreCount = this.allOutStore.length;
+              //
+              // if (this.outstoreCount > this.outstorePageSize) {
+              //   for (let i = (val - 1) * this.outstorePageSize; i < val * this.outstorePageSize && i < this.outstoreCount; i++) {
+              //     this.outstore.push(this.allOutStore[i]);
+              //   }
+              //   //console.log(val * this.outstorePageSize);
+              // } else {
+              //   for (let i = 0; i < this.outstoreCount; i++) {
+              //     this.outstore.push(this.allOutStore[i]);
+              //   }
+              // }
+            } else this.$message.error(response.retMsg);
+          }).catch(function (error) {
+            console.log(error);
+          });
+
+        } else {
+          this.damage = [];
+          if (this.damageCount > this.damagePageSize) {
+            for (let i = (val - 1) * this.damagePageSize; i < val * this.damagePageSize && i < this.damageCount; i++) {
+              this.damage.push(this.allDamage[i]);
+            }
+          } else {
+            for (let i = 0; i < this.damageCount; i++) {
+              this.damage.push(this.allDamage[i]);
+            }
+          }
+        }
+
+
+      },
+
+      getAllEmployee: function () {
+        getEmployees().then((response) => {
+          if (response.retCode === 1) {
+            //globleVariable.allEmployee = response.data;
+            //console.log(this.allEmployee);
+            //storage.set(allEmployee,response.data);
+            //console.log(storage.get(allEmployee));
+            //allEmployee = response.data;
+          } else this.$message.error(response.retMsg);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      },
+
+      addDamage:function () {
+        this.$router.push({
+          path: '/addDamage'
+        });
       }
     },
 
@@ -724,6 +1176,15 @@
 
       //请求获取入库信息
       this.getInstore(1);
+
+      //请求获取出库信息
+      this.outStoreCurrentChange(1);
+
+      //请求获取报损信息
+      this.damageCurrentChange(1);
+
+      //获取所以得职工信息
+      //this.getAllEmployee();
 
     },
     watch: {
@@ -759,7 +1220,7 @@
         } else if (val === '1-4') {
           let jQueryObject1 = $("#HousewareMessage");
           jQueryObject1.css("display", "none");
-          let jQueryObject2 = $("#ProductManager");
+          let jQueryObject2 = $("#ProductManagerOut");
           jQueryObject2.css("display", "none");
           let jQueryObject4 = $("#ProductManagerIn");
           jQueryObject4.css("display", "none");

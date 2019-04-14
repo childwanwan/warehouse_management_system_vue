@@ -7,6 +7,12 @@ export const ADDR_KEY = '__addr__'
 
 export const INSTORE_KEY = '__instore__'
 
+export const OUTSTORE_KEY = '__outstore__'
+
+export const DAMAGE_KEY = '_damage_'
+
+//export const allEmployee = []
+
 export default {
   get(key) {
     return window.sessionStorage.getItem(key)

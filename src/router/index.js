@@ -9,6 +9,9 @@ import Houseware_manager_login_success from '../components/Houseware_manager_log
 import HousewareMessage from '../components/HousewareMessage'
 import InstoreDetail from '../components/InstoreDetail'
 import AddInstore from  '../components/AddInstore'
+import AddOutstore from '../components/AddOutstore'
+import AddDamage from '../components/AddDamage'
+import DamageDetail from '../components/DamageDetail'
 
 Vue.use(Router)
 
@@ -23,5 +26,8 @@ export default new Router({
 
     {path: '/InstoreDetail', name: 'InstoreDetail', component: InstoreDetail},
     {path: '/AddInstore', name: 'AddInstore', component: AddInstore},
+    {path: '/AddOutstore', name: 'AddOutstore', component: AddOutstore},
+    {path: '/AddDamage', name: 'AddDamage', component: AddDamage},
+    {path: '/DamageDetail', name: 'DamageDetail', component: DamageDetail},
   ]
 })

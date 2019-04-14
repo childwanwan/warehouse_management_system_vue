@@ -5,17 +5,17 @@
 
       <el-card class="box-card" style="width: 80%;margin-left: 10%">
         <div slot="header" class="clearfix">
-          <span style="margin-left: 40%;color: #909399;font-size: large">物品入库</span>
+          <span style="margin-left: 40%;color: #909399;font-size: large">物品报损</span>
           <el-button style="float: left; padding: 3px 0" type="text" @click="back()">&lt;返回</el-button>
         </div>
 
-        <el-form ref="instore" :model="instore" label-width="100px">
+        <el-form ref="damage" :model="damage" label-width="100px">
 
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="物品提供者">
-                <el-select v-model="instore.provideId" placeholder="请选择物品提供者" style="width: 40%">
+              <el-form-item label="报损单创建者">
+                <el-select v-model="damage.provideId" placeholder="请选择报损单创建者" style="width: 40%">
                   <el-option v-for="(item,index) in provideName" :value="item" :key="item">
                     {{item}}
                   </el-option>
@@ -24,8 +24,8 @@
             </el-col>
             <el-col :span="12">
 
-              <el-form-item label="物品接收者">
-                <el-select v-model="instore.reserverId" placeholder="请选择物品接收者" style="width: 40%">
+              <el-form-item label="报损单审核人">
+                <el-select v-model="damage.reserverId" placeholder="请选择报损单审核人" style="width: 40%">
                   <el-option v-for="(item,index) in reserverName" :value="item" :key="item">
                     {{item}}
                   </el-option>
@@ -33,38 +33,26 @@
               </el-form-item>
             </el-col>
           </el-row>
+
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="报损单名称">
+                <el-input v-model="damage.damageName" placeholder="报损单名称" style="width: 40%"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+
+              <el-form-item label="报损单描述">
+                <el-input v-model="damage.comment" placeholder="报损单描述" style="width: 40%"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
           <!--链入物品-->
           <div>
-            <span>入库物品</span>
+            <span>报损物品</span>
             <div>
-              <!--<el-table-->
-              <!--:data="instoreGoods"-->
-              <!--style="width: 100%"-->
-              <!--row-key="id"-->
-              <!--border-->
-              <!--lazy-->
-              <!--&gt;-->
-              <!--<el-table-column-->
-              <!--prop="goodsCode"-->
-              <!--label="物品编码"-->
-              <!--width="180">-->
-              <!--<el-input v-model="instoreGoods.goodsCode" placeholder="请输入物品编码"></el-input>-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="specificationItems"-->
-              <!--label="规格"-->
-              <!--width="180">-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="goodsNum"-->
-              <!--label="数量"-->
-              <!--width="180">-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="comment"-->
-              <!--label="描述">-->
-              <!--</el-table-column>-->
-              <!--</el-table>-->
 
               <table cellspacing="0" cellpadding="0" border="1"
                      style="width: 100%;border:solid #add9c0; border-width:0px 0px 0px 0px;">
@@ -103,11 +91,11 @@
                 </thead>
 
                 <!--应该是一个vue循环-->
-                <tr v-for="(item, index) in instoreGoods"
+                <tr v-for="(item, index) in damageGoods"
                     style="height: 10%;border:solid #add9c0; border-width:1px 1px 1px 1px; padding:10px 0px;">
                   <td>
                     <el-input v-model="item.goodsCode" placeholder="请输入物品编码"
-                              @blur="getGoodsDicMessage(item.goodsCode,index)"></el-input>
+                              @blur="getGoodsMessage(item.goodsCode,index)"></el-input>
                   </td>
                   <td>
                     <el-select v-model="item.specificationItems" placeholder="请选择物品规格">
@@ -126,18 +114,18 @@
                   </td>
                   <td>
                     <el-button type="success" icon="el-icon-check" circle style="margin-left: 20%;padding: 5%"
-                               @click="saveGoods(item)" id="isClick"></el-button>
+                               @click="saveGoods(item)"></el-button>
                     <el-button type="danger" icon="el-icon-delete" circle style="padding: 5%"
                                @click="delGoods(item,index)"></el-button>
                   </td>
                 </tr>
 
               </table>
-              <!--入库增加栏-->
+              <!--出库增加栏-->
               <div style="width: 80%;margin-left: 10%;margin-top: 5%">
                 <p
                   style="display: flex;justify-content: center;align-items: center;padding: 2rem 0;font-size: 2rem;cursor: pointer;background-color: #eee;"
-                  @click="addInstore(table_rows)">
+                  @click="addDamage(table_rows)">
                   <span style="color: #909399">+ 添加物品</span>
                 </p>
               </div>
@@ -147,7 +135,7 @@
 
               <!--两个按钮-->
               <div style="float: right;margin-bottom: 3%;margin-top: 3%;margin-right: 3%">
-                <el-button type="primary" plain @click="doInstore()">确认入库</el-button>
+                <el-button type="primary" plain @click="doDamage()">确认报损</el-button>
               </div>
 
 
@@ -163,19 +151,20 @@
 </template>
 
 <script>
-  import $ from 'jquery'
-
-  import {getGoodsDicMessage} from '../api'
+  import {getGoodsMessage} from '../api'
   import {getEmployees} from "../api";
-  import {insertInstore} from  '../api';
+  import {insertInstore} from '../api';
   import {getGoodsByGoodsCode} from '../api'
+  import {getGoodsByCondition} from '../api'
+  import {insertOutstore} from '../api'
+  import {insertDamage} from '../api'
 
   export default {
-    name: "AddInstore",
+    name: "AddDamage",
     data() {
       return {
-        instore: {},
-        instoreGoods: [],
+        damage: {},
+        damageGoods: [],
         //规格
         specificationItems: [],
         goods: [{
@@ -185,7 +174,7 @@
           comment: ''
         }],
         table_rows: 0,
-        lastInstoreGoods: [],
+        lastDamageGoods: [],
         goodsId: '',
         reserverName: [],
         provideName: [],
@@ -194,35 +183,35 @@
     },
     methods: {
       //添加按钮
-      addInstore(index) {
+      addDamage(index) {
         this.goods.push({
           goodsCode: '',
           specificationItems: '',
           buyNum: 0,
           comment: ''
         });
-        this.instoreGoods.push(this.goods[index]);
+        this.damageGoods.push(this.goods[index]);
         this.table_rows++;
       },
 
-      //获取goodsDic信息
-      getGoodsDicMessage(value, index) {
+      //获取goods信息
+      getGoodsMessage(value, index) {
         let data = JSON.stringify({goodsCode: value});
-        getGoodsDicMessage(data).then((res) => {
-          //console.log(res);//res.data['hello world']
+        getGoodsByGoodsCode(data).then((res) => {
+          console.log(res);
           if (res.retCode === 1) {
             if (res.data.length > 0) {
-              //this.specificationItems = [];
-              this.goodsId = res.data[0].id;
-              this.specificationItems[index] = res.data[0].specificationItems;
-              //console.log(this.specificationItems);
-              // for (let i = 0; i < res.data[0].specificationItems.length; i++) {
-              //   this.specificationItems[i][''] = res.data[0].specificationItems[i];
-              // }
+              let tempSpecificationItems = [];
+              for (let i = 0; i < res.data.length; i++) {
+                tempSpecificationItems.push(res.data[i].specificationItems);
+              }
+              //console.log(tempSpecificationItems);
+              this.specificationItems[index] = tempSpecificationItems;
+              //console.log(this.specificationItems[index],index);
+
             } else {
               this.$message.error("您输入的物品编码有误，请重新输入");
             }
-
           } else this.$message.error("您输入的物品编码有误，请重新输入");
         }).catch(function (error) {
           console.log(error);
@@ -231,9 +220,6 @@
 
       //保存goods
       saveGoods(item) {
-        // $("#isClick").attr('disabled',true);
-       console.log( $("#isClick").text());
-        $("#isClick").attr("disabled", true);
         var temp = {};
         var numReg = new RegExp("^[1-9][0-9]*$");
         if (item.specificationItems === '') {
@@ -242,106 +228,88 @@
           this.$message.error("请输入正确的数量");
         } else {
           //console.log(item);
-          let data = JSON.stringify({goodsCode: item.goodsCode});
-          getGoodsDicMessage(data).then((res) => {
-            //console.log(res);//res.data['hello world']
+          let data = JSON.stringify({goodsCode: item.goodsCode, specificationItems: item.specificationItems});
+          getGoodsByCondition(data).then((res) => {
+            console.log(res);
             if (res.retCode === 1) {
               if (res.data.length > 0) {
-                this.goodsId = res.data[0].id;
-                item['id'] = res.data[0].id;
-                temp['id'] = res.data[0].id;
+                let temp = {};
+                if (res.data[0].goodsNum < item.buyNum) {
+                  this.$message.error("您输入的物品数量过大，请重新输入");
+                } else {
+                  temp = item;
+                  let m = true;
+                  for (let i = 0; i < this.lastDamageGoods.length; i++) {
+                    if (this.lastDamageGoods[i].goodsCode == temp.goodsCode && this.lastDamageGoods[i].specificationItems == temp.specificationItems) {
+                      this.lastDamageGoods[i] = temp;
+                      m = false;
+                      break;
+                    }
+                  }
+                  if (m) {
+                    this.lastDamageGoods.push(temp);
+                  } else {
+                    this.$message.warning("您已经保存过该数据了");
+                  }
+                  console.log(this.lastDamageGoods);
+                }
               } else {
-                this.$message.error("您输入的物品编码有误，请重新输入");
+                this.$message.error("您输入的物品信息有误，请重新输入");
               }
             } else this.$message.error(res.retMsg);
           }).catch(function (error) {
             console.log(error);
           })
 
-          temp['goodsNum'] = item.buyNum;
-          temp['comment'] = item.comment;
-          temp['specificationItems'] = item.specificationItems;
-          // delete item['goodsCode'];
-          // item['goodsNum'] = item.buyNum;
-          // delete item['buyNum'];
-          // console.log(item['id']);
-          // console.log(temp);
-          let m = true;
-          //console.log(this.lastInstoreGoods[i].id);
-          //console.log(temp.specificationItems);
-          for (let i = 0; i < this.lastInstoreGoods.length; i++) {
-            if (this.lastInstoreGoods[i].id == this.goodsId && this.lastInstoreGoods[i].specificationItems == temp.specificationItems) {
-              this.lastInstoreGoods[i] = temp;
-              //this.lastInstoreGoods.push(temp);
-              m = false;
-              break;
-            }
-          }
-          if (m) {
-            this.lastInstoreGoods.push(temp);
-          } else {
-            this.$message.warning("您已经保存过该数据了");
-          }
-          console.log(this.lastInstoreGoods);
+
         }
-        //$("#isClick").attr('disabled',false);
       },
       //删除goods
       delGoods(item, index) {
-        this.instoreGoods.splice(index, 1);
-        this.lastInstoreGoods.splice(index, 1);
+        this.damageGoods.splice(index, 1);
+        this.lastDamageGoods.splice(index, 1);
         //delete this.instoreGoods[index];
         //this.instoreGoods.pop(index-1);
-        console.log(this.instoreGoods);
+        //console.log(this.outstoreGoods);
       },
-      //入库
-      doInstore() {
-        if (JSON.stringify(this.instore)=="{}"||this.instore.provideId == '' || this.instore.reserverId == '' || this.instore.provideId.length <= 0 || this.instore.reserverId.length <= 0) {
+      //出库
+      doDamage() {
+        console.log(this.damage);
+        if (JSON.stringify(this.damage) == "{}" || this.damage.provideId == '' || this.damage.reserverId == '' || this.damage.provideId.length <= 0 || this.damage.reserverId.length <= 0 || this.damage.damageName=='' || this.damage.damageName.length<1) {
           this.$alert('请选择接收人或者提供者名称', '温馨提示', {
             confirmButtonText: '确定',
           });
-        }else if(this.lastInstoreGoods.length<1){
-          this.$alert('请添加入库物品', '温馨提示', {
+        } else if (this.lastDamageGoods.length < 1) {
+          this.$alert('请添加出库物品', '温馨提示', {
             confirmButtonText: '确定',
           });
-        }else {
-          // getEmployees().then((res) => {
-          //   console.log(res);
-          //   if (res.retCode === 1) {
-          //     if (res.data.length > 0) {
-          //       for (let i = 0; i < res.data.length; i++) {
-          //         if (res.data[i].employeeName == this.instore.provideId) {
-          //           this.instore.provideId = res.data[i].id;
-          //         }
-          //         if (res.data[i].employeeName == this.instore.reserverId) {
-          //           this.instore.reserverId = res.data[i].id;
-          //         }
-          //       }
-          //     }
-          //   } else this.$message.error(res.retMsg);
-          // }).catch(function (error) {
-          //   console.log(error);
-          // })
+        } else {
+
           for (let i = 0; i < this.allEmployee.length; i++) {
-            if (this.allEmployee[i].employeeName == this.instore.provideId) {
-              this.instore.provideId = this.allEmployee[i].id;
+            if (this.allEmployee[i].employeeName == this.damage.provideId) {
+              this.damage.provideId = this.allEmployee[i].id;
             }
-            if (this.allEmployee[i].employeeName == this.instore.reserverId) {
-              this.instore.reserverId = this.allEmployee[i].id;
+            if (this.allEmployee[i].employeeName == this.damage.reserverId) {
+              this.damage.reserverId = this.allEmployee[i].id;
             }
           }
           let total = 0;
-          for (let i = 0; i < this.lastInstoreGoods.length; i++) {
-            total = total + parseInt(this.lastInstoreGoods[i].goodsNum);
+          for (let i = 0; i < this.lastDamageGoods.length; i++) {
+            total = total + parseInt(this.lastDamageGoods[i].buyNum);
+            this.lastDamageGoods[i]['count'] = this.lastDamageGoods[i].buyNum;
           }
+
+
           let data = JSON.stringify({
-            provideId: this.instore.provideId,
-            reserverId: this.instore.reserverId,
+            createPersonId: this.damage.provideId,
+            checkPersonId: this.damage.reserverId,
             totalNum: total,
-            goodsList: this.lastInstoreGoods,
+            damageName:this.damage.damageName,
+            comment:this.damage.comment,
+            ids: this.lastDamageGoods,
           });
-          //console.log(data);
-          insertInstore(data).then((res) => {
+          console.log(data);
+          insertDamage(data).then((res) => {
             //console.log(res);
             if (res.retCode === 1) {
               this.$router.push({
@@ -362,10 +330,12 @@
             if (res.data.length > 0) {
               this.allEmployee = res.data;
               for (let i = 0; i < res.data.length; i++) {
-                if (res.data[i].status===3 ||res.data[i].status===4||res.data[i].status===5) {
+                if (res.data[i].status === 3 || res.data[i].status === 4 || res.data[i].status === 5) {
+                  this.provideName.push(res.data[i].employeeName);
+                }
+                if (res.data[i].status === 4 || res.data[i].status === 5) {
                   this.reserverName.push(res.data[i].employeeName);
                 }
-                this.provideName.push(res.data[i].employeeName);
               }
             }
           } else this.$message.error(res.retMsg);
@@ -373,7 +343,7 @@
           console.log(error);
         })
       },
-      back(){
+      back() {
         history.back(-1);
       },
     },
