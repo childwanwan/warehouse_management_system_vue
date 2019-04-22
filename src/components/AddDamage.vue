@@ -251,12 +251,20 @@
                   } else {
                     this.$message.warning("您已经保存过该数据了");
                   }
-                  console.log(this.lastDamageGoods);
+                  //console.log(this.lastDamageGoods);
                 }
               } else {
                 this.$message.error("您输入的物品信息有误，请重新输入");
               }
-            } else this.$message.error(res.retMsg);
+            } else  {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -315,7 +323,15 @@
               this.$router.push({
                 path: '/houseware_manager_login_success'
               });
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -338,7 +354,15 @@
                 }
               }
             }
-          } else this.$message.error(res.retMsg);
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })

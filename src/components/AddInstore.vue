@@ -37,34 +37,6 @@
           <div>
             <span>入库物品</span>
             <div>
-              <!--<el-table-->
-              <!--:data="instoreGoods"-->
-              <!--style="width: 100%"-->
-              <!--row-key="id"-->
-              <!--border-->
-              <!--lazy-->
-              <!--&gt;-->
-              <!--<el-table-column-->
-              <!--prop="goodsCode"-->
-              <!--label="物品编码"-->
-              <!--width="180">-->
-              <!--<el-input v-model="instoreGoods.goodsCode" placeholder="请输入物品编码"></el-input>-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="specificationItems"-->
-              <!--label="规格"-->
-              <!--width="180">-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="goodsNum"-->
-              <!--label="数量"-->
-              <!--width="180">-->
-              <!--</el-table-column>-->
-              <!--<el-table-column-->
-              <!--prop="comment"-->
-              <!--label="描述">-->
-              <!--</el-table-column>-->
-              <!--</el-table>-->
 
               <table cellspacing="0" cellpadding="0" border="1"
                      style="width: 100%;border:solid #add9c0; border-width:0px 0px 0px 0px;">
@@ -253,7 +225,15 @@
               } else {
                 this.$message.error("您输入的物品编码有误，请重新输入");
               }
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -305,23 +285,7 @@
             confirmButtonText: '确定',
           });
         }else {
-          // getEmployees().then((res) => {
-          //   console.log(res);
-          //   if (res.retCode === 1) {
-          //     if (res.data.length > 0) {
-          //       for (let i = 0; i < res.data.length; i++) {
-          //         if (res.data[i].employeeName == this.instore.provideId) {
-          //           this.instore.provideId = res.data[i].id;
-          //         }
-          //         if (res.data[i].employeeName == this.instore.reserverId) {
-          //           this.instore.reserverId = res.data[i].id;
-          //         }
-          //       }
-          //     }
-          //   } else this.$message.error(res.retMsg);
-          // }).catch(function (error) {
-          //   console.log(error);
-          // })
+
           for (let i = 0; i < this.allEmployee.length; i++) {
             if (this.allEmployee[i].employeeName == this.instore.provideId) {
               this.instore.provideId = this.allEmployee[i].id;
@@ -347,7 +311,15 @@
               this.$router.push({
                 path: '/houseware_manager_login_success'
               });
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -368,7 +340,15 @@
                 this.provideName.push(res.data[i].employeeName);
               }
             }
-          } else this.$message.error(res.retMsg);
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })

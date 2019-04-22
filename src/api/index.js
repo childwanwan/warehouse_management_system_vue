@@ -87,6 +87,30 @@ export function getGoodsDicMessage(data) {
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
 
+/*------------------------------------查询数据字典------------------------------------*/
+export function updateGoodsDicById(data) {
+  const url = '/goodsDic/update'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------删除数据字典------------------------------------*/
+export function deleteGoodsDicByGoodsCode(data) {
+  const url = '/goodsDic/delete'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------删除数据字典------------------------------------*/
+export function insertGoodsDicByGoodsCode(data) {
+  const url = '/goodsDic/insert'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+
+
+
+
+
 /*------------------------------------根据goodsCode查询goods------------------------------------*/
 export function getGoodsByGoodsCode(data) {
   const url = '/goods/getGoodsByGoodsCode'
@@ -102,10 +126,24 @@ export function getGoodsByCondition(data) {
 
 
 /*------------------------------------获取所有职工信息------------------------------------*/
+export function updateEmployees(data) {
+  const url = '/employee/update'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------更新职工信息------------------------------------*/
 export function getEmployees() {
   const url = '/employee/getEmployees'
   return adminHttp().get(url).then(res => Promise.resolve(res.data))
 }
+
+/*------------------------------------根据状态获取职工信息------------------------------------*/
+export function getEmployeesByStatus(data) {
+  const url = '/employee/getEmployeesByStatus'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
 
 /*------------------------------------入库------------------------------------*/
 export function insertInstore(data) {
@@ -125,6 +163,26 @@ export function getOutstores() {
   const url = '/outstore/getOutstores'
   return adminHttp().get(url).then(res => Promise.resolve(res.data))
 }
+
+/*------------------------------------根据id查询出库单------------------------------------*/
+export function getOutstoresById(data) {
+  const url = '/outstore/getOutstoresById'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------查询出库单------------------------------------*/
+export function getOutstoresGoodsByOutstoresId(data) {
+  const url = '/outstore/getOutstoresGoodsByOutstoresId'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+// /*------------------------------------查询仓库管理员------------------------------------*/
+// export function getUsers() {
+//   const url = '/employee/getEmployees'
+//   return adminHttp().get(url).then(res => Promise.resolve(res.data))
+// }
+
+
 
 /*------------------------------------查询出库单------------------------------------*/
 export function insertOutstore(data) {
@@ -150,6 +208,74 @@ export function getDamageById(data) {
   const url = '/damage/queryById'
   return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
 }
+
+
+/*------------------------------------根据名字获取供应商信息------------------------------------*/
+export function getProviderByCondition(data) {
+  const url = '/provider/getProviderByCondition?providerName='+data
+  return adminHttp().get(url).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------根据名字获取供应商信息------------------------------------*/
+export function getProvider() {
+  const url = '/provider/getProvider'
+  return adminHttp().get(url).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------更新供应商信息------------------------------------*/
+export function updateProviderById(data) {
+  const url = '/provider/updateProvider'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+/*------------------------------------添加供应商信息------------------------------------*/
+export function insertProvider(data) {
+  const url = '/provider/addProvider'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------添加供应商信息------------------------------------*/
+export function getEmployeeByEmployeeName(data) {
+  const url = '/employee/getEmployeeByEmployeeName'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------添加职工------------------------------------*/
+export function addEmployee(data) {
+  const url = '/employee/addEmployee'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------更新报损单------------------------------------*/
+export function updateDamage(data) {
+  const url = '/damage/updateDamage'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+/*------------------------------------更新报损单------------------------------------*/
+export function updateDamageStatus(data) {
+  const url = '/damage/updateStatus'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+/*------------------------------------更新报损单------------------------------------*/
+export function logOut(data) {
+  const url = '/employee/logOut'
+  return adminHttp().post(url,data).then(res => Promise.resolve(res.data))
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

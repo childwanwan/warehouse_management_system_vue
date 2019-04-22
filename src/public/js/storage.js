@@ -11,6 +11,15 @@ export const OUTSTORE_KEY = '__outstore__'
 
 export const DAMAGE_KEY = '_damage_'
 
+export const USER_KEY = '__user__'
+
+export const GOODSDIR_KEY = '__goodsDir__'
+
+export const PROVIDER_KEY = '__provider__'
+
+export const EMPLOYEE_KEY = '__employee__'
+export const SYSTEMMANAGE_KEY = '__systemManager__'
+
 //export const allEmployee = []
 
 export default {

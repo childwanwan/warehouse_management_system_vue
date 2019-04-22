@@ -213,7 +213,8 @@
           //console.log(item);
           let data = JSON.stringify({goodsCode: item.goodsCode,specificationItems:item.specificationItems});
           getGoodsByCondition(data).then((res) => {
-            console.log(res);
+            //
+            // console.log(res);
             if (res.retCode === 1) {
               if (res.data.length > 0) {
                 let temp = {};
@@ -234,12 +235,23 @@
                   } else {
                     this.$message.warning("您已经保存过该数据了");
                   }
-                  console.log(this.lastOutstoreGoods);
+                  //
+                  //
+                  //
+                  // console.log(this.lastOutstoreGoods);
                 }
               } else {
                 this.$message.error("您输入的物品信息有误，请重新输入");
               }
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -294,7 +306,15 @@
               this.$router.push({
                 path: '/houseware_manager_login_success'
               });
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -315,7 +335,15 @@
                 this.provideName.push(res.data[i].employeeName);
               }
             }
-          } else this.$message.error(res.retMsg);
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })

@@ -1,21 +1,21 @@
 <template>
   <div>
-    <el-card class="box-card" >
+    <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>入库单详情</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="back()">返回</el-button>
+        <span>出库单详情</span>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="back();">返回</el-button>
       </div>
       <div class="text item">
-        <el-form ref="this.instore" :model="this.instore" label-width="100px">
+        <el-form ref="this.outstore" :model="this.outstore" label-width="100px">
           <el-row>
             <el-col :span="12">
               <el-form-item label="物品出手人">
-                <el-input v-model="this.instore.provideId" :disabled="true" style="width: 30%"></el-input>
+                <el-input v-model="this.outstore.providerId" :disabled="true" style="width: 30%"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="物品接收人">
-                <el-input v-model="this.instore.reserverId" :disabled="true" style="width: 30%"></el-input>
+                <el-input v-model="this.outstore.reserveId" :disabled="true" style="width: 30%"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -23,13 +23,14 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="物品总数量">
-                <el-input v-model="this.instore.totalNum" :disabled="true" style="width: 30%"></el-input>
+                <el-input v-model="this.outstore.totalNum" :disabled="true" style="width: 30%"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="入库时间">
+              <el-form-item label="出库时间">
                 <el-col :span="11">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="this.instore.instoreTime" style="width: 66%;"
+                  <el-date-picker type="date" placeholder="选择日期" v-model="this.outstore.outstoreTime"
+                                  style="width: 66%;"
                                   :disabled="true"></el-date-picker>
                 </el-col>
               </el-form-item>
@@ -38,9 +39,9 @@
         </el-form>
 
 
-        <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">入库物品清单</div>
+        <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">出库物品清单</div>
         <el-table
-          :data="instoreItems"
+          :data="outstoreItems"
           border
           style="width: 100%">
           <el-table-column
@@ -79,7 +80,7 @@
             width="245">
           </el-table-column>
           <el-table-column
-            prop="buyNum"
+            prop="sellNum"
             label="入库数量"
             width="235"
             align="center">
@@ -97,9 +98,10 @@
 
 <script>
   import {getdetailById} from '../api'
-  import {getInstoreById} from '../api'
+  import {getOutstoresById} from '../api'
   import {getEmployeeById} from '../api'
   import {getGoodsById} from '../api'
+  import {getOutstoresGoodsByOutstoresId} from '../api'
 
 
   import {timeFormate} from '../public/js/dateUtils'
@@ -109,34 +111,34 @@
     USERNAME_KEY,
     IDENTIFY_KEY,
     ADDR_KEY,
-    INSTORE_KEY
+    INSTORE_KEY, OUTSTORE_KEY
   } from '../public/js/storage'
 
   export default {
-    name: "InstoreDetail",
+    name: "OutstoreDetail",
     data() {
       return {
-        instore: {},
-        instoreItems: [],
+        outstore: {},
+        outstoreItems: [],
       }
     },
     methods: {
-      getInstore: function () {
+      getOutstore: function () {
         let data = JSON.stringify({
-          "instoreId": storage.get(INSTORE_KEY),
+          "id": storage.get(OUTSTORE_KEY),
         });
         //console.log(data);
-        getInstoreById(data).then((response) => {
+        getOutstoresById(data).then((response) => {
           //console.log(response);
           if (response.retCode === 1) {
             //转换数据
             //转出手人id
             let dataId = JSON.stringify({
-              "id": response.instore['provideId'],
+              "id": response.data['providerId'],
             })
             getEmployeeById(dataId).then((res) => {
               if (res.retCode === 1) {
-                response.instore['provideId'] = res.data.employeeName;
+                response.data['providerId'] = res.data.employeeName;
               } else {
                 if (response.retCode == '000000') {
                   this.$router.push({
@@ -151,12 +153,12 @@
             })
             //转接收人id
             let dataReserveId = JSON.stringify({
-              "id": response.instore['reserverId'],
+              "id": response.data['reserveId'],
             })
             getEmployeeById(dataReserveId).then((res) => {
               //console.log(res.retCode);//res.data['hello world']
               if (res.retCode === 1) {
-                response.instore['reserverId'] = res.data.employeeName;
+                response.data['reserveId'] = res.data.employeeName;
               } else {
                 if (res.retCode == '000000') {
                   this.$router.push({
@@ -170,10 +172,13 @@
               console.log(error);
             })
             //转时间
-            var date = new Date(response.instore['instoreTime'].time);
-            response.instore['instoreTime'] = timeFormate(date);
+            var date = new Date(response.data['createTime'].time);
+            response.data['outstoreTime'] = timeFormate(date);
             //赋值
-            this.instore = response.instore;
+            this.outstore = response.data;
+
+            //console.log(this.outstore);
+
           } else {
             if (response.retCode == '000000') {
               this.$router.push({
@@ -187,12 +192,12 @@
           console.log(error);
         })
 
-        getdetailById(data).then((response) => {
+        getOutstoresGoodsByOutstoresId(data).then((response) => {
           //console.log(response);
           if (response.retCode === 1) {
             for (let i = 0; i < response.data.length; i++) {
               let data = JSON.stringify({
-                id:response.data[i].goodsId,
+                id: response.data[i].goodsId,
               });
               getGoodsById(data).then((res) => {
                 //console.log(res);
@@ -204,20 +209,12 @@
                   response.data[i]['customAttributeItems'] = res.data.customAttributeItems;
                   response.data[i]['goodsName'] = res.data.goodsName;
                   response.data[i]['goodsCode'] = res.data.goodsCode;
-                } else {
-                  if (res.retCode == '000000') {
-                    this.$router.push({
-                      path: '/'
-                    });
-                  } else {
-                    this.$message.error(res.retMsg);
-                  }
-                }
+                } else this.$message.error(res.retMsg);
               }).catch(function (error) {
                 console.log(error);
               })
             }
-            this.instoreItems = response.data;
+            this.outstoreItems = response.data;
           } else {
             if (response.retCode == '000000') {
               this.$router.push({
@@ -231,14 +228,15 @@
           console.log(error);
         })
 
+
       },
-      back:function () {
+      back: function () {
         history.back(-1);
       },
 
     },
     created() {
-      this.getInstore();
+      this.getOutstore();
     },
   }
 </script>

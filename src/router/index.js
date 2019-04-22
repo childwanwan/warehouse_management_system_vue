@@ -12,6 +12,13 @@ import AddInstore from  '../components/AddInstore'
 import AddOutstore from '../components/AddOutstore'
 import AddDamage from '../components/AddDamage'
 import DamageDetail from '../components/DamageDetail'
+import OutstoreDetail from '../components/OutstoreDetail'
+import System_manager_login_success from '../components/System_manager_login_success'
+import AddUser from '../components/AddUser'
+import AddGoodsDir from '../components/AddGoodsDir'
+import AddProvider from '../components/AddProvider'
+import AddEmployee from '../components/AddEmployee'
+import Boss_login_success from '../components/Boss_login_success'
 
 Vue.use(Router)
 
@@ -29,5 +36,18 @@ export default new Router({
     {path: '/AddOutstore', name: 'AddOutstore', component: AddOutstore},
     {path: '/AddDamage', name: 'AddDamage', component: AddDamage},
     {path: '/DamageDetail', name: 'DamageDetail', component: DamageDetail},
+    {path: '/OutstoreDetail', name: 'OutstoreDetail', component: OutstoreDetail},
+    {path: '/system_manager_login_success', name: 'System_manager_login_success', component: System_manager_login_success},
+    {path: '/AddUser', name: 'AddUser', component: AddUser},
+
+    {path: '/AddGoodsDir', name: 'AddGoodsDir', component: AddGoodsDir},
+
+    {path: '/AddProvider', name: 'AddProvider', component: AddProvider},
+
+    {path: '/AddEmployee', name: 'AddEmployee', component: AddEmployee},
+
+    {path: '/Boss_login_success', name: 'Boss_login_success', component: Boss_login_success},
+
+
   ]
 })

@@ -16,8 +16,8 @@
         <p>时间：{{time}}&nbsp&nbsp角色：{{role}}&nbsp&nbsp仓库号：2019</p>
         <br>
         <p style="color: white">
-          <a id="help" href="#" style="color: white"><i></i>帮&nbsp;&nbsp;助</a>
-          <a id="quit" href="#" style="color: white;padding-left: 10%"><i></i>退&nbsp;&nbsp;出</a>
+          <a id="help" href="#" style="color: white" ><i></i>帮&nbsp;&nbsp;助</a>
+          <a id="quit" href="#" style="color: white;padding-left: 10%" @click="loginOut"><i></i>退&nbsp;&nbsp;出</a>
         </p>
       </div>
     </div>
@@ -59,40 +59,6 @@
     <!--右边身子主体-->
     <div style="float: right;width:84%;">
       <div id="HousewareMessage" class="HousewareMessage">
-        <!--<div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库目前信息</div>-->
-        <!--<el-table-->
-        <!--:data="housewareMessagetableData"-->
-        <!--border-->
-        <!--style="width: 100%">-->
-        <!--<el-table-column-->
-        <!--prop="ID"-->
-        <!--label="仓库ID号"-->
-        <!--width="180">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column-->
-        <!--prop="name"-->
-        <!--label="仓库名字"-->
-        <!--width="180">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column-->
-        <!--prop="repertory"-->
-        <!--label="仓库库存">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column-->
-        <!--prop="space"-->
-        <!--label="剩余空间"-->
-        <!--width="180">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column-->
-        <!--prop="address"-->
-        <!--label="仓库地址"-->
-        <!--width="180">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column-->
-        <!--prop="status"-->
-        <!--label="状态码">-->
-        <!--</el-table-column>-->
-        <!--</el-table>-->
         <!--物品信息-->
         <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库物品信息</div>
         <!--模糊查询-->
@@ -151,16 +117,7 @@
               width="180"
               align="center">
             </el-table-column>
-            <!--<el-table-column-->
-            <!--label="出库"-->
-            <!--width="157"-->
-            <!--align="center" >-->
-            <!--<template slot-scope="scope">　-->
-            <!--<el-button type="primary" style="width: 70%;text-align: center;margin-left: 5%;height: 45px">出库</el-button>　　　　　-->
-            <!--&lt;!&ndash;<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>&ndash;&gt;-->
-            <!--&lt;!&ndash;<button style="width: 80px !important;">出库</button>&ndash;&gt;-->
-            <!--</template>-->
-            <!--</el-table-column>-->
+
           </el-table>
           <!--分页-->
           <div style="text-align: center;margin-top: 30px;">
@@ -185,11 +142,6 @@
       <!--出库管理-->
       <div id="ProductManagerOut" class="ProductManagerOut" style="display: none">
         <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库出库管理</div>
-        <!--<div style="float: left">-->
-        <!--<el-card shadow="hover">-->
-        <!--创建出库单-->
-        <!--</el-card>-->
-        <!--</div>-->
 
         <el-table
           :data="outstore"
@@ -261,12 +213,6 @@
 
       <div id="ProductManagerIn" class="ProductManagerIn" style="display: none">
         <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库入库管理</div>
-        <!--<div style="float: left">-->
-        <!--<el-card shadow="hover">-->
-        <!--创建出库单-->
-        <!--</el-card>-->
-        <!--</div>-->
-
 
         <el-table
           :data="instore"
@@ -311,8 +257,6 @@
               <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
                          @click="deleteInstore(scope.$index, scope.row)">删除
               </el-button>
-              <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
-              <!--<button style="width: 80px !important;">出库</button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -348,40 +292,39 @@
           <el-table-column
             prop="damageName"
             label="报损单名称"
-            width="216"
+            width="175"
             align="center">
           </el-table-column>
-
-          <!--<el-table-column-->
-            <!--prop="damageType"-->
-            <!--label="报损单类型"-->
-            <!--width="180"-->
-            <!--align="center">-->
-          <!--</el-table-column>-->
-
 
           <el-table-column
             prop="createPersonId"
             label="报损单创建人"
             align="center"
-            width="216">
+            width="175">
           </el-table-column>
           <el-table-column
             prop="checkPersonId"
             label="报损单审核人"
-            width="216"
+            width="175"
             align="center">
           </el-table-column>
           <el-table-column
             prop="createTime"
             label="创建时间"
-            width="210"
+            width="175"
             align="center">
           </el-table-column>
           <el-table-column
             prop="approvalTime"
             label="审核时间"
-            width="200"
+            width="175"
+            align="center">
+          </el-table-column>
+
+          <el-table-column
+            prop="status"
+            label="状态"
+            width="175"
             align="center">
           </el-table-column>
 
@@ -394,8 +337,6 @@
               <el-button type="primary" style="width: 50%;text-align: center;;height: 25px"
                          @click="showDamageDetail(scope.$index, scope.row)">查询详情
               </el-button>
-              <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
-              <!--<button style="width: 80px !important;">出库</button>-->
             </template>
           </el-table-column>
 
@@ -418,7 +359,6 @@
           </p>
         </div>
 
-
       </div>
     </div>
   </div>
@@ -435,6 +375,7 @@
   import {getOutstores} from '../api'
   import {getDamages} from '../api'
   import {getEmployees} from '../api'
+  import {logOut} from '../api'
   import storage, {
     TOKEN_KEY,
     TELEPHONE_KEY,
@@ -532,12 +473,8 @@
 
       //改变页数所触发的函数
       currentChange: function (val) {
-        //this.searchByName = '';
-        //alert("折哦度没进来" + val);
         //console.log(this.productMessagetableData);
         this.currentPage = val;
-        //this.$axios.defaults.headers.common['token'] = this.token;
-        //
         if (this.searchByName === '') {
           if (val > 1) {
             this.productMessagetableData = [];
@@ -571,52 +508,15 @@
                     this.productMessagetableData.push(response.data[i]);
                   }
                 }
-                //console.log(this.count);
-                // console.log(this.allPage);
-                // console.log(this.productMessagetableData);
-                //
-                //
-                // this.pageSize = 5;
-                //
-                //
-                // this.count = this.allPage * 10;
-                // console.log(this.allPage + " " + this.count);
-                //
-                // if (this.currentPage > parseInt(response.data['data']['count'] / this.pageSize)) {
-                //   for (let i = 0; i < this.pageSize; i++) {
-                //     this.productMessagetableData[i].ID = '';
-                //     this.productMessagetableData[i].name = '';
-                //     //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-                //     this.productMessagetableData[i].createTime = '';
-                //     this.productMessagetableData[i].damagedCondition = '';
-                //     this.productMessagetableData[i].goodsDescription = '';
-                //     this.productMessagetableData[i].price = '';
-                //     this.productMessagetableData[i].updateTime = '';
-                //   }
-                //   this.pageSize = response.data['data']['count'] % this.pageSize;
-                //   console.log(this.pageSize);
-                //
-                // }
-                // //数据赋值
-                // console.log(response);
-                // //this.productMessagetableData=null;
-                //
-                //
-                // for (let i = 0; i < this.pageSize; i++) {
-                //
-                //   this.productMessagetableData[i].ID = response.data['data']['data'][i]['id'].toString();
-                //   this.productMessagetableData[i].name = response.data['data']['data'][i]['name'].toString();
-                //   //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-                //   this.productMessagetableData[i].createTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
-                //   this.productMessagetableData[i].damagedCondition = response.data['data']['data'][i]['damagedCondition'];
-                //   this.productMessagetableData[i].goodsDescription = response.data['data']['data'][i]['goodsDescription'];
-                //   this.productMessagetableData[i].price = response.data['data']['data'][i]['price'];
-                //   this.productMessagetableData[i].updateTime = new Date(response.data['data']['data'][i]['createTime']['time']).toString();
-                // }
-                // this.pageSize = 5;
+
               } else {
-                //this.productMessagetableData.push();
-                this.$message.error(response.retMsg);
+                if (response.retCode == '000000') {
+                  this.$router.push({
+                    path: '/'
+                  });
+                } else {
+                  this.$message.error(response.retMsg);
+                }
               }
             })
               .catch(function (error) {
@@ -639,61 +539,19 @@
       getParams: function () {
         // 取到登入带过来的参数
         this.telephone = storage.get(TELEPHONE_KEY);
-        //this.token = this.$route.query.token;
         this.role = storage.get(IDENTIFY_KEY);
         this.username = storage.get(USERNAME_KEY);
         this.addr = storage.get(ADDR_KEY);
       },
-      // getWarehouseData:function () {
-      //   this.housewareMessagetableData[0]['ID']=this.getObj['id'];
-      //   this.housewareMessagetableData[0]['name']=this.getObj['name'];
-      //   this.housewareMessagetableData[0]['repertory']=this.getObj['repertory'];
-      //   this.housewareMessagetableData[0]['space']=this.getObj['space'];
-      //   this.housewareMessagetableData[0]['address']=this.getObj['address'];
-      //   this.housewareMessagetableData[0]['status']=this.getObj['status'];
-      // },
+
       selectByName: function () {
 
-        //this.$axios.defaults.headers.common['token'] = this.token;
-        // this.$axios.get("http://localhost:10010/api/logic/logic_controller/get_goods_message_bySerachName",
-        //   {
-        //     params: {
-        //       searchByName: this.searchByName,
-        //       warehouseId: this.housewareID
-        //     }
-        //   }
-
-        // ).then((response) => {
-        //   console.log(response.data);
-        //   for (let i = 0; i < this.pageSize; i++) {
-        //     this.productMessagetableData[i].ID = '';
-        //     this.productMessagetableData[i].name = '';
-        //     //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-        //     this.productMessagetableData[i].createTime = '';
-        //     this.productMessagetableData[i].damagedCondition = '';
-        //     this.productMessagetableData[i].goodsDescription = '';
-        //     this.productMessagetableData[i].price = '';
-        //     this.productMessagetableData[i].updateTime = '';
-        //   }
-        //   if ("1" == response.data['code']) {
-        //     console.log(response.data['data'])
-        //     this.productMessagetableData[0].ID = response.data['data'][0]['id'].toString();
-        //     this.productMessagetableData[0].name = response.data['data'][0]['name'].toString();
-        //     //this.datetimeFormat(response.data['data']['data'][i]['createTime']['time']
-        //     this.productMessagetableData[0].createTime = new Date(response.data['data'][0]['createTime']['time']).toString();
-        //     this.productMessagetableData[0].damagedCondition = response.data['data'][0]['damagedCondition'];
-        //     this.productMessagetableData[0].goodsDescription = response.data['data'][0]['goodsDescription'];
-        //     this.productMessagetableData[0].price = response.data['data'][0]['price'];
-        //     this.productMessagetableData[0].updateTime = new Date(response.data['data'][0]['createTime']['time']).toString();
-        //
-        //   }
-        // })
         let data = JSON.stringify({
           'goodsName': this.searchByName,
         })
         getGoodsBygoodsName(data).then((res) => {
           //console.log(res);
-          //console.log(res.retCode);//res.data['hello world']
+          //console.log(res.retCode);
           if (res.retCode === 1) {
             //console.log(res.data);
             this.conditionGoods = res.data;
@@ -717,7 +575,15 @@
             }
 
 
-          } else this.$message.error(res.retMsg);
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })
@@ -738,7 +604,7 @@
 
           getInstore(data).then((res) => {
             //console.log(res);
-            //console.log(res.retCode);//res.data['hello world']
+            //console.log(res.retCode);
             if (res.retCode === 1) {
               this.instoreCount = res.instores.length;
               if (this.instoreCount % this.instorePageSize === 0) {
@@ -758,20 +624,20 @@
                   //console.log(res.retCode);//res.data['hello world']
                   if (response.retCode === 1) {
                     res.instores[i]['provideId'] = response.data.employeeName;
-                  } else this.$message.error(response.retMsg);
+                  } else {
+                    if (response.retCode == '000000') {
+                      this.$router.push({
+                        path: '/'
+                      });
+                    } else {
+                      this.$message.error(response.retMsg);
+                    }
+                  }
                 }).catch(function (error) {
                   console.log(error);
                 })
 
-                // if (globleVariable.allEmployee.length<1){
-                //   this.getAllEmployee();
-                // }
-                // console.log(this.allEmployee,1);
-                // for (let i = 0; i < globleVariable.allEmployee.length; i++) {
-                //   if (res.instores[i]['provideId'] == globleVariable.allEmployee[i].id) {
-                //     res.instores[i]['provideId'] = globleVariable.allEmployee.employeeName;
-                //   }
-                // }
+
                 //转接收人id
                 let dataReserveId = JSON.stringify({
                   "id": res.instores[i]['reserverId'],
@@ -780,7 +646,15 @@
                   //console.log(res.retCode);//res.data['hello world']
                   if (response.retCode === 1) {
                     res.instores[i]['reserverId'] = response.data.employeeName;
-                  } else this.$message.error(response.retMsg);
+                  } else {
+                    if (response.retCode == '000000') {
+                      this.$router.push({
+                        path: '/'
+                      });
+                    } else {
+                      this.$message.error(response.retMsg);
+                    }
+                  }
                 }).catch(function (error) {
                   console.log(error);
                 })
@@ -808,7 +682,15 @@
                   this.instore.push(res.instores[i]);
                 }
               }
-            } else this.$message.error(res.retMsg);
+            } else {
+              if (res.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(res.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -828,9 +710,9 @@
 
       },
       //报损单查看详情
-      showDamageDetail:function(index,row){
-        storage.set(DAMAGE_KEY,row.id);
-        this.$router.push({path:'/damageDetail'});
+      showDamageDetail: function (index, row) {
+        storage.set(DAMAGE_KEY, row.id);
+        this.$router.push({path: '/damageDetail'});
       },
 
       //添加入库单
@@ -866,7 +748,15 @@
                 message: '删除成功!'
               });
               this.instore.pop(index);
-            } else this.$message.error(response.retMsg);
+            } else {
+              if (response.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(response.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -906,7 +796,15 @@
                 message: '删除成功!'
               });
               this.outstore.pop(index);
-            } else this.$message.error(response.retMsg);
+            } else {
+              if (response.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(response.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           })
@@ -938,7 +836,15 @@
                   //console.log(res.retCode);//res.data['hello world']
                   if (res.retCode === 1) {
                     response.data[i]['providerId'] = res.data.employeeName;
-                  } else this.$message.error(response.retMsg);
+                  } else {
+                    if (response.retCode == '000000') {
+                      this.$router.push({
+                        path: '/'
+                      });
+                    } else {
+                      this.$message.error(response.retMsg);
+                    }
+                  }
                 }).catch(function (error) {
                   console.log(error);
                 })
@@ -979,7 +885,15 @@
                   this.outstore.push(this.allOutStore[i]);
                 }
               }
-            } else this.$message.error(response.retMsg);
+            } else {
+              if (response.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(response.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           });
@@ -1001,13 +915,12 @@
       //报损单更改页数
       damageCurrentChange: function (val) {
 
-
         this.damageCurrentPage = val;
         if (val == 1 && this.allDamage.length == 0) {
           this.damage = [];
           let data = JSON.stringify({"": ""});
           getDamages(data).then((response) => {
-            console.log(response.damages);
+            //console.log(response.damages);
             if (response.retCode === 1) {
               for (let i = 0; i < response.damages.length; i++) {
                 if (response.damages[i].deep == 0) {
@@ -1024,7 +937,15 @@
                   //console.log(res.retCode);//res.data['hello world']
                   if (res.retCode === 1) {
                     response.damages[i]['createPersonId'] = res.data.employeeName;
-                  } else this.$message.error(res.retMsg);
+                  } else {
+                    if (response.retCode == '000000') {
+                      this.$router.push({
+                        path: '/'
+                      });
+                    } else {
+                      this.$message.error(response.retMsg);
+                    }
+                  }
                 }).catch(function (error) {
                   console.log(error);
                 })
@@ -1037,7 +958,15 @@
                   //console.log(res.retCode);//res.data['hello world']
                   if (res.retCode === 1) {
                     response.damages[i]['checkPersonId'] = res.data.employeeName;
-                  } else this.$message.error(res.retMsg);
+                  } else {
+                    if (response.retCode == '000000') {
+                      this.$router.push({
+                        path: '/'
+                      });
+                    } else {
+                      this.$message.error(response.retMsg);
+                    }
+                  }
                 }).catch(function (error) {
                   console.log(error);
                 })
@@ -1053,6 +982,15 @@
                   response.damages[i]['approvalTime'] = '';
                 }
 
+                if (response.damages[i]['status']==0){
+                  response.damages[i]['status'] = "待审批";
+                }else if (response.damages[i]['status']==1){
+                  response.damages[i]['status'] = "被打回";
+                }else {
+                  response.damages[i]['status'] = "审批通过";
+                }
+
+
               }
               this.allDamage = response.damages;
 
@@ -1064,67 +1002,24 @@
               this.damageCount = this.allDamage.length;
 
               if (this.damageCount > this.damagePageSize) {
-                  for (let i = (val - 1) * this.damagePageSize; i < val * this.damagePageSize && i < this.damageCount; i++) {
-                    this.damage.push(this.allDamage[i]);
-                  }
-                  //console.log(val * this.outstorePageSize);
-                } else {
-                  for (let i = 0; i < this.damageCount; i++) {
-                    this.damage.push(this.allDamage[i]);
-                  }
+                for (let i = (val - 1) * this.damagePageSize; i < val * this.damagePageSize && i < this.damageCount; i++) {
+                  this.damage.push(this.allDamage[i]);
                 }
-              //解析修改值
-              // for (let i = 0; i < response.data.length; i++) {
-              //   //转出手人id
-              //   let dataId = JSON.stringify({
-              //     "id": response.data[i]['providerId'],
-              //   })
-              //   getEmployeeById(dataId).then((res) => {
-              //     //console.log(res.retCode);//res.data['hello world']
-              //     if (res.retCode === 1) {
-              //       response.data[i]['providerId'] = res.data.employeeName;
-              //     } else this.$message.error(response.retMsg);
-              //   }).catch(function (error) {
-              //     console.log(error);
-              //   })
-              //   //转接收人id
-              //   let dataReserveId = JSON.stringify({
-              //     "id": response.data[i]['reserveId'],
-              //   })
-              //   getEmployeeById(dataReserveId).then((res) => {
-              //     //console.log(res.retCode);//res.data['hello world']
-              //     if (res.retCode === 1) {
-              //       response.data[i]['reserveId'] = res.data.employeeName;
-              //     } else this.$message.error(response.retMsg);
-              //   }).catch(function (error) {
-              //     console.log(error);
-              //   })
-              //   //转时间
-              //   var date = new Date(response.data[i]['outstoreTime'].time);
-              //   response.data[i]['outstoreTime'] = timeFormate(date);
-              // }
-              // //console.log(response.data);
-              // this.allOutStore = response.data;
-              //
-              // if (this.allOutStore.length % this.outstorePageSize === 0) {
-              //   this.outstoreAllPage = this.allOutStore.length / this.outstorePageSize;
-              // } else {
-              //   this.outstoreAllPage = parseInt(this.allOutStore.length / this.outstorePageSize) + 1;
-              // }
-              // //console.log(this.outstoreAllPage);
-              // this.outstoreCount = this.allOutStore.length;
-              //
-              // if (this.outstoreCount > this.outstorePageSize) {
-              //   for (let i = (val - 1) * this.outstorePageSize; i < val * this.outstorePageSize && i < this.outstoreCount; i++) {
-              //     this.outstore.push(this.allOutStore[i]);
-              //   }
-              //   //console.log(val * this.outstorePageSize);
-              // } else {
-              //   for (let i = 0; i < this.outstoreCount; i++) {
-              //     this.outstore.push(this.allOutStore[i]);
-              //   }
-              // }
-            } else this.$message.error(response.retMsg);
+                //console.log(val * this.outstorePageSize);
+              } else {
+                for (let i = 0; i < this.damageCount; i++) {
+                  this.damage.push(this.allDamage[i]);
+                }
+              }
+            } else {
+              if (response.retCode == '000000') {
+                this.$router.push({
+                  path: '/'
+                });
+              } else {
+                this.$message.error(response.retMsg);
+              }
+            }
           }).catch(function (error) {
             console.log(error);
           });
@@ -1148,22 +1043,53 @@
       getAllEmployee: function () {
         getEmployees().then((response) => {
           if (response.retCode === 1) {
-            //globleVariable.allEmployee = response.data;
-            //console.log(this.allEmployee);
-            //storage.set(allEmployee,response.data);
-            //console.log(storage.get(allEmployee));
-            //allEmployee = response.data;
-          } else this.$message.error(response.retMsg);
+          } else {
+            if (response.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(response.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         });
       },
 
-      addDamage:function () {
+      addDamage: function () {
         this.$router.push({
           path: '/addDamage'
         });
+      },
+
+
+      loginOut:function () {
+
+        let data = JSON.stringify({
+          token:storage.get(TOKEN_KEY)
+        });
+        logOut(data).then((response) => {
+          if (response.retCode === 1) {
+            storage.clear();
+            this.$router.push({
+              path: '/'
+            });
+          } else {
+            if (response.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(response.retMsg);
+            }
+          }
+        }).catch(function (error) {
+          //console.log(error);
+        });
+
       }
+
     },
 
     created() {

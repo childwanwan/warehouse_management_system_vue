@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>报损单详情</span>
-        <el-button style="float: right; padding: 3px 0" type="text">返回</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="back()">返回</el-button>
       </div>
       <div class="text item">
         <el-form ref="this.damage" :model="this.damage" label-width="100px">
@@ -109,6 +109,12 @@
 
         </el-table>
 
+        <div style="padding: 5%;float: right" v-if=" this.identify != '仓库管理员' && this.damage.status == 0">
+
+        <el-button plain @click="callbackDamage">报损打回</el-button>
+        <el-button type="success" plain @click="aggreDamage">同意报损</el-button>
+        </div>
+
         <!--占格-->
         <div style="height: 30px"></div>
 
@@ -118,14 +124,12 @@
 </template>
 
 <script>
-  import {getdetailById} from '../api'
-  import {getInstoreById} from '../api'
   import {getEmployeeById} from '../api'
-  import {getGoodsById} from '../api'
   import {getDamageById} from '../api'
 
-
   import {timeFormate} from '../public/js/dateUtils'
+  import {updateDamage} from '../api'
+  import {updateDamageStatus} from '../api'
   import storage, {
     TOKEN_KEY,
     TELEPHONE_KEY,
@@ -142,6 +146,7 @@
       return {
         damage: {},
         damageItems: [],
+        identify:'',
       }
     },
     methods: {
@@ -173,7 +178,15 @@
               //console.log(res.retCode);//res.data['hello world']
               if (res.retCode === 1) {
                 response.damage['checkPersonId'] = res.data.employeeName;
-              } else this.$message.error(res.retMsg);
+              } else {
+                if (res.retCode == '000000') {
+                  this.$router.push({
+                    path: '/'
+                  });
+                } else {
+                  this.$message.error(res.retMsg);
+                }
+              }
             }).catch(function (error) {
               console.log(error);
             })
@@ -191,45 +204,72 @@
             //赋值
             this.damage = response.damage;
             this.damageItems = response.goods;
-          } else this.$message.error(response.retMsg);
+          } else {
+            if (response.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(response.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })
 
-        // getdetailById(data).then((response) => {
-        //   //console.log(response);
-        //   if (response.retCode === 1) {
-        //     for (let i = 0; i < response.data.length; i++) {
-        //       let data = JSON.stringify({
-        //         id: response.data[i].goodsId,
-        //       });
-        //       getGoodsById(data).then((res) => {
-        //         //console.log(res);
-        //         if (res.retCode === 1) {
-        //           response.data[i]['comment'] = res.data.comment;
-        //           //response.data[i]['goodsNum'] = res.data.goodsNum;
-        //           response.data[i]['goodsType'] = res.data.goodsType;
-        //           response.data[i]['specificationItems'] = res.data.specificationItems;
-        //           response.data[i]['customAttributeItems'] = res.data.customAttributeItems;
-        //           response.data[i]['goodsName'] = res.data.goodsName;
-        //           response.data[i]['goodsCode'] = res.data.goodsCode;
-        //         } else this.$message.error(res.retMsg);
-        //       }).catch(function (error) {
-        //         console.log(error);
-        //       })
-        //     }
-        //     this.damageItems = response.data;
-        //   } else this.$message.error(response.retMsg);
-        // }).catch(function (error) {
-        //   console.log(error);
-        // })
-
-
        },
-
+      back:function () {
+        history.back(-1);
+      },
+      callbackDamage:function () {
+        let data = JSON.stringify({
+          id:storage.get(DAMAGE_KEY),
+          status:1,
+          approvalTime:new Date(),
+        });
+        updateDamage(data).then((res) => {
+          if (res.retCode === 1) {
+            res.damage['checkPersonId'] = res.data.employeeName;
+            this.back();
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      },
+      aggreDamage:function () {
+        let data = JSON.stringify({
+          id:storage.get(DAMAGE_KEY),
+          status:2,
+        });
+        updateDamageStatus(data).then((res) => {
+          if (res.retCode === 1) {
+            res.damage['checkPersonId'] = res.data.employeeName;
+            this.back();
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
+      }
     },
     created() {
       this.getDamage();
+      this.identify = storage.get(IDENTIFY_KEY);
     },
   }
 </script>

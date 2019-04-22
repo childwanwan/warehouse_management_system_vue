@@ -38,7 +38,7 @@
               <el-menu-item index="1" style="width: 130px">账号密码登入</el-menu-item>
               <el-menu-item index="2" style="width: 130px">扫一扫登入</el-menu-item>
               <el-menu-item index="3" style="width: 130px">
-                <router-link tag="div" to="/register">
+                <router-link tag="div" to="/addEmployee">
                   <span>新用户注册</span>
                 </router-link>
               </el-menu-item>
@@ -163,15 +163,6 @@
           </div>
         </div>
 
-
-        <!--<el-card :body-style="{ padding: '5px' }" style="float: right;">
-            <img width="100" height="100" src="../assets/mh2.jpg.png">
-            <div style="padding: 4px;text-align: center">
-              <span>东华理工网</span>
-            </div>
-          </el-card>-->
-
-
       </div>
     </div>
 
@@ -214,8 +205,8 @@
         ipAddress: '',
 
         ruleForm: {
-          username: '15797934718',
-          password: '147852369',
+          username: '15797934717',
+          password: '123456',
           identify: '仓库管理员',
           securityCode: '',
         },
@@ -322,26 +313,32 @@
                 console.log(res);
                 //console.log(res.retCode);//res.data['hello world']
                 if (res.retCode.toString() === '1') {
+                  let sessionId = res.sessionId;
+                  let telephone = res.data['telephone'];
+                  let employeeName = res.data['employeeName'];
+                  let identify = this.ruleForm.identify;
+                  let addr = res.data['addr'];
+                  let dataParam = {sessionId,telephone,employeeName,identify,addr};
+                  this.loginSuccess(dataParam);
                   if (this.ruleForm.identify === '仓库管理员') {
                     //console.log(res.data['employeeName']);
-                    let sessionId = res.sessionId;
-                    let telephone = res.data['telephone'];
-                    let employeeName = res.data['employeeName'];
-                    let identify = this.ruleForm.identify;
-                    let addr = res.data['addr'];
-                    let dataParam = {sessionId,telephone,employeeName,identify,addr};
-                    //console.log(dataParam);
-                    this.loginSuccess(dataParam);
-                    //loginSuccess(dataParam);
                     this.$router.push({
                       path: '/houseware_manager_login_success'
                     });
+                  }else if (this.ruleForm.identify === '系统管理员') {
+                    this.$router.push({
+                      path: '/system_manager_login_success'
+                    });
+                  }else if (this.ruleForm.identify === '超级管理员') {
+                    this.$router.push({
+                      path: '/boss_login_success'
+                    });
                   }
-                } else this.$message.error(res.data['message']);
+                } else if (res.retCode === -2 ){
+                  this.$message.error("账号，密码或者账号类型错误");
+                }else this.$message.error(res.retMsg);
               })
                 .catch((res) => {
-                  //console.log(res.data);
-                  //this.$message.error("请求失败！")
                 });
 
             } else {
