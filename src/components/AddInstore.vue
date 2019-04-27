@@ -241,6 +241,7 @@
           temp['goodsNum'] = item.buyNum;
           temp['comment'] = item.comment;
           temp['specificationItems'] = item.specificationItems;
+          temp['goodsCode'] = item.goodsCode;
           // delete item['goodsCode'];
           // item['goodsNum'] = item.buyNum;
           // delete item['buyNum'];
@@ -259,10 +260,11 @@
           }
           if (m) {
             this.lastInstoreGoods.push(temp);
+            this.$message.success("保存成功");
           } else {
             this.$message.warning("您已经保存过该数据了");
           }
-          console.log(this.lastInstoreGoods);
+          //console.log(this.lastInstoreGoods);
         }
         //$("#isClick").attr('disabled',false);
       },
@@ -272,7 +274,7 @@
         this.lastInstoreGoods.splice(index, 1);
         //delete this.instoreGoods[index];
         //this.instoreGoods.pop(index-1);
-        console.log(this.instoreGoods);
+        //console.log(this.instoreGoods);
       },
       //入库
       doInstore() {
@@ -308,9 +310,7 @@
           insertInstore(data).then((res) => {
             //console.log(res);
             if (res.retCode === 1) {
-              this.$router.push({
-                path: '/houseware_manager_login_success'
-              });
+              this.back();
             } else {
               if (res.retCode == '000000') {
                 this.$router.push({

@@ -1,5 +1,15 @@
 <template>
   <div>
+
+    <div style="display: none">
+    <el-button
+      type="primary"
+      @click="openFullScreen"
+      v-loading.fullscreen.lock="fullscreenLoading">
+      指令方式
+    </el-button>
+    </div>
+
     <!--头部-->
     <div class="head">
       <!--东华理工大学及标题-->
@@ -394,6 +404,9 @@
 
     data() {
       return {
+
+        fullscreenLoading:false,
+
         //后台带回
         username: '万平平',
         supportTimes: '0',
@@ -1088,29 +1101,41 @@
           //console.log(error);
         });
 
-      }
+      },
+
+      openFullScreen() {
+
+
+        //获取带过来的参数，和设置请求的token
+        this.getParams();
+        //this.getWarehouseData();
+        //请求物品数据第一页
+        this.currentChange(1);
+        //请求，填充其他数据
+
+        //请求获取入库信息
+        this.getInstore(1);
+
+        //请求获取出库信息
+        this.outStoreCurrentChange(1);
+
+        //请求获取报损信息
+        this.damageCurrentChange(1);
+
+        //获取所以得职工信息
+        //this.getAllEmployee();
+
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 3000);
+
+      },
 
     },
 
     created() {
-      //获取带过来的参数，和设置请求的token
-      this.getParams();
-      //this.getWarehouseData();
-      //请求物品数据第一页
-      this.currentChange(1);
-      //请求，填充其他数据
-
-      //请求获取入库信息
-      this.getInstore(1);
-
-      //请求获取出库信息
-      this.outStoreCurrentChange(1);
-
-      //请求获取报损信息
-      this.damageCurrentChange(1);
-
-      //获取所以得职工信息
-      //this.getAllEmployee();
+      this.openFullScreen();
 
     },
     watch: {

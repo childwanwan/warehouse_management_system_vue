@@ -102,7 +102,7 @@
 
               <el-form-item>
                 <el-button style="width: 90%;text-align: center;margin-left: 5%;height: 45px" type="primary"
-                           @click="submitForm('ruleForm')">登入
+                           @click="submitForm('ruleForm')" :loading="Isloading" id="submitClick">登入
                 </el-button>
               </el-form-item>
 
@@ -199,6 +199,9 @@
       };
 
       return {
+
+        Isloading:false,
+
         ck_code: '',
         ck_message: '提示信息',
         activeIndex: '1',
@@ -285,11 +288,9 @@
       },
       submitForm: function (formName) {
         if (this.ck_message === '验证码正确') {
-          //console.log(activeIndex,username,password,identify,securityCode)
-          //alert()
           this.$refs[formName].validate((valid) => {
             if (valid) {
-
+              this.Isloading = true;
               let status = 9999;
               if (this.ruleForm.identify == '仓库管理员') {
                 status = 3;
@@ -310,7 +311,9 @@
 
               //this.submitText = '登录中...'
               login(data).then((res) => {
-                console.log(res);
+                this.createCode();
+                this.Isloading = false;
+                //console.log(res);
                 //console.log(res.retCode);//res.data['hello world']
                 if (res.retCode.toString() === '1') {
                   let sessionId = res.sessionId;
@@ -339,10 +342,12 @@
                 }else this.$message.error(res.retMsg);
               })
                 .catch((res) => {
+                  this.Isloading = false;
+                  this.createCode();
                 });
-
             } else {
-              console.log('error submit!!');
+              //console.log('error submit!!');
+              this.createCode();
               return false;
             }
           })

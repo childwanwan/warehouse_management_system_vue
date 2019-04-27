@@ -1,5 +1,15 @@
 <template>
   <div>
+
+    <div style="display: none">
+      <el-button
+        type="primary"
+        @click="openFullScreen"
+        v-loading.fullscreen.lock="fullscreenLoading">
+        指令方式
+      </el-button>
+    </div>
+
     <!--头部-->
     <div class="head">
       <!--东华理工大学及标题-->
@@ -738,38 +748,38 @@
           <el-table-column
             prop="providerType"
             label="供应物品编码"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="providerName"
             label="供应商名称"
             align="center"
-            width="180">
+            width="210">
           </el-table-column>
           <el-table-column
             prop="linkman"
             label="联系人"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="telephone"
             label="联系电话"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="addr"
             label="联系地址"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
 
           <el-table-column
             prop=""
             label="操作"
-            width="180"
+            width="210"
             align="center">
             <template slot-scope="scope">　
               <el-button type="primary" style="width: 30%;text-align: center;;height: 25px"
@@ -838,7 +848,7 @@
       </div>
 
 
-  </div>
+    </div>
   </div>
 </template>
 
@@ -886,6 +896,7 @@
 
     data() {
       return {
+        fullscreenLoading:false,
         //后台带回
         username: '万平平',
         supportTimes: '0',
@@ -1312,7 +1323,7 @@
       },
 
       //报损单删除
-      deleteDamage:function (index,row) {
+      deleteDamage: function (index, row) {
         //console.log(row);
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -1321,7 +1332,7 @@
         }).then(() => {
           let data = JSON.stringify({
             id: row.id,
-            status:9999
+            status: 9999
           });
           updateDamage(data).then((response) => {
             //console.log(res.retCode);
@@ -1620,11 +1631,11 @@
                   response.damages[i]['approvalTime'] = '';
                 }
 
-                if (response.damages[i]['status']==0){
+                if (response.damages[i]['status'] == 0) {
                   response.damages[i]['status'] = "待审批";
-                }else if (response.damages[i]['status']==1){
+                } else if (response.damages[i]['status'] == 1) {
                   response.damages[i]['status'] = "被打回";
-                }else {
+                } else {
                   response.damages[i]['status'] = "审批通过";
                 }
 
@@ -2060,7 +2071,7 @@
       },
 
       //添加物品字典
-      addGoodsDir:function () {
+      addGoodsDir: function () {
         this.$router.push({
           path: '/addGoodsDir'
         });
@@ -2074,7 +2085,7 @@
           'providerName': this.searchProviderByName,
         })
         getProviderByCondition(this.searchProviderByName).then((res) => {
-          console.log(res);
+          //console.log(res);
           //console.log(res.retCode);
           if (res.retCode === 1) {
             //console.log(res.data);
@@ -2189,7 +2200,7 @@
         this.providerDialogFormVisible = true;
       },
       updateproviderToDataBase: function (index, row) {
-        console.log(this.providerForm);
+        //console.log(this.providerForm);
 
         this.$confirm('此操作将修改该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -2199,7 +2210,7 @@
           this.providerForm['id'] = storage.get(PROVIDER_KEY);
           let data = JSON.stringify(this.providerForm);
           updateProviderById(data).then((response) => {
-            console.log(response.data);
+            //console.log(response.data);
             if (response.retCode === 1) {
               this.$message({
                 type: 'success',
@@ -2230,7 +2241,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let data = JSON.stringify({id: row.id,status:9999});
+          let data = JSON.stringify({id: row.id, status: 9999});
           updateProviderById(data).then((response) => {
             //console.log(response);
             //console.log(response.data['data']['count']);
@@ -2243,7 +2254,7 @@
               //location.reload();
               setTimeout(function () {
                 location.reload();
-              },1000)
+              }, 1000)
             } else {
               if (response.retCode == '000000') {
                 this.$router.push({
@@ -2261,7 +2272,7 @@
       },
 
       //添加供应商
-      addProvider:function () {
+      addProvider: function () {
         this.$router.push({
           path: '/addProvider'
         });
@@ -2275,7 +2286,7 @@
           'employeeName': this.searchEmployeeByName,
         })
         getEmployeeByEmployeeName(data).then((res) => {
-          console.log(res);
+          //console.log(res);
           //console.log(res.retCode);
           if (res.retCode === 1) {
             //console.log(res.data);
@@ -2325,9 +2336,9 @@
               this.employeeData.push(this.allEmployee[i]);
             }
           } else {
-            let data = JSON.stringify({status:1})
+            let data = JSON.stringify({status: 1})
             getEmployeesByStatus(data).then((response) => {
-              console.log(response);
+              //console.log(response);
 
               if (response.retCode === 1) {
                 this.allEmployee = response.data;
@@ -2367,7 +2378,7 @@
         } else {
           if (val > 1) {
             //console.log(this.employeeData);
-            this.employeeData=[{"employeeName":'',"telephone":'',"adde":''}];
+            this.employeeData = [{"employeeName": '', "telephone": '', "adde": ''}];
             //  for (let i = 0;i<this.employeeData.length;i++){
             //    this.employeeData.pop(i);
             //  }
@@ -2393,7 +2404,7 @@
         this.employeeDialogFormVisible = true;
       },
       updateEmployeeToDataBase: function (index, row) {
-        console.log(this.employeeForm);
+        //console.log(this.employeeForm);
 
         this.$confirm('此操作将修改该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -2403,7 +2414,7 @@
           this.employeeForm['id'] = storage.get(EMPLOYEE_KEY);
           let data = JSON.stringify(this.employeeForm);
           updateEmployees(data).then((response) => {
-            console.log(response.data);
+            //console.log(response.data);
             if (response.retCode === 1) {
               this.$message({
                 type: 'success',
@@ -2434,7 +2445,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let data = JSON.stringify({id: row.id,status:9999});
+          let data = JSON.stringify({id: row.id, status: 9999});
           updateEmployees(data).then((response) => {
             //console.log(response);
             //console.log(response.data['data']['count']);
@@ -2447,7 +2458,7 @@
               //location.reload();
               setTimeout(function () {
                 location.reload();
-              },1000)
+              }, 1000)
             } else {
               if (response.retCode == '000000') {
                 this.$router.push({
@@ -2465,16 +2476,16 @@
       },
 
       //添加职工
-      addEmployee:function () {
+      addEmployee: function () {
         this.$router.push({
           path: '/addEmployee'
         });
       },
 
-      loginOut:function () {
+      loginOut: function () {
 
         let data = JSON.stringify({
-          token:storage.get(TOKEN_KEY)
+          token: storage.get(TOKEN_KEY)
         });
         logOut(data).then((response) => {
           if (response.retCode === 1) {
@@ -2494,43 +2505,52 @@
           //console.log(error);
         });
 
+      },
+
+      openFullScreen() {
+
+//获取带过来的参数，和设置请求的token
+        this.getParams();
+        //this.getWarehouseData();
+        //请求物品数据第一页
+        this.currentChange(1);
+        //请求，填充其他数据
+
+        //请求获取入库信息
+        this.getInstore(1);
+
+        //请求获取出库信息
+        this.outStoreCurrentChange(1);
+
+        //请求获取报损信息
+        this.damageCurrentChange(1);
+
+        //获取所以得职工信息
+        //this.getAllEmployee();
+
+        //获取仓库管理员信息
+        this.userCurrentChange(1);
+
+        //获取商品字典信息
+        this.goodsDirCurrentChange(1);
+
+        //获取供应商信息
+        this.providerCurrentChange(1);
+
+        //获取职工信息
+        this.employeeCurrentChange(1);
+
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 3000);
       }
 
 
     },
 
     created() {
-      //获取带过来的参数，和设置请求的token
-      this.getParams();
-      //this.getWarehouseData();
-      //请求物品数据第一页
-      this.currentChange(1);
-      //请求，填充其他数据
-
-      //请求获取入库信息
-      this.getInstore(1);
-
-      //请求获取出库信息
-      this.outStoreCurrentChange(1);
-
-      //请求获取报损信息
-      this.damageCurrentChange(1);
-
-      //获取所以得职工信息
-      //this.getAllEmployee();
-
-      //获取仓库管理员信息
-      this.userCurrentChange(1);
-
-      //获取商品字典信息
-      this.goodsDirCurrentChange(1);
-
-      //获取供应商信息
-      this.providerCurrentChange(1);
-
-      //获取职工信息
-      this.employeeCurrentChange(1);
-
+      this.openFullScreen();
     }
     ,
     watch: {

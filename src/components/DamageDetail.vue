@@ -229,7 +229,7 @@
         });
         updateDamage(data).then((res) => {
           if (res.retCode === 1) {
-            res.damage['checkPersonId'] = res.data.employeeName;
+            //res.damage['checkPersonId'] = res.data.employeeName;
             this.back();
           } else {
             if (res.retCode == '000000') {
@@ -251,7 +251,8 @@
         });
         updateDamageStatus(data).then((res) => {
           if (res.retCode === 1) {
-            res.damage['checkPersonId'] = res.data.employeeName;
+            //res.damage['checkPersonId'] = res.data.employeeName;
+            this.$message.success("操作成功");
             this.back();
           } else {
             if (res.retCode == '000000') {

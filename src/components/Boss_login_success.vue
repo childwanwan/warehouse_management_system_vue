@@ -1,5 +1,15 @@
 <template>
   <div>
+
+    <div style="display: none">
+      <el-button
+        type="primary"
+        @click="openFullScreen"
+        v-loading.fullscreen.lock="fullscreenLoading">
+        指令方式
+      </el-button>
+    </div>
+
     <!--头部-->
     <div class="head">
       <!--东华理工大学及标题-->
@@ -741,38 +751,38 @@
           <el-table-column
             prop="providerType"
             label="供应物品编码"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="providerName"
             label="供应商名称"
             align="center"
-            width="180">
+            width="210">
           </el-table-column>
           <el-table-column
             prop="linkman"
             label="联系人"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="telephone"
             label="联系电话"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
           <el-table-column
             prop="addr"
             label="联系地址"
-            width="180"
+            width="210"
             align="center">
           </el-table-column>
 
           <el-table-column
             prop=""
             label="操作"
-            width="180"
+            width="210"
             align="center">
             <template slot-scope="scope">　
               <el-button type="primary" style="width: 30%;text-align: center;;height: 25px"
@@ -989,6 +999,8 @@
 
     data() {
       return {
+
+        fullscreenLoading:false,
 
         employeeStatus: [{key:1,val:"普通职工"}, {key:3,val:"仓库管理员"}, {key:4,val:"系统管理员"},{key:9999,val:"删除"}],
 
@@ -1745,6 +1757,14 @@
                   response.damages[i]['approvalTime'] = timeFormate(date1);
                 } else {
                   response.damages[i]['approvalTime'] = '';
+                }
+
+                if (response.damages[i]['status']==0){
+                  response.damages[i]['status'] = "待审批";
+                }else if (response.damages[i]['status']==1){
+                  response.damages[i]['status'] = "被打回";
+                }else {
+                  response.damages[i]['status'] = "审批通过";
                 }
 
               }
@@ -2736,46 +2756,57 @@
           //console.log(error);
         });
 
-      }
+      },
+      openFullScreen:function () {
+        //this.fullscreenLoading = true;
 
+
+
+        //获取带过来的参数，和设置请求的token
+        this.getParams();
+        //this.getWarehouseData();
+        //请求物品数据第一页
+        this.currentChange(1);
+        //请求，填充其他数据
+
+        //请求获取入库信息
+        this.getInstore(1);
+
+        //请求获取出库信息
+        this.outStoreCurrentChange(1);
+
+        //请求获取报损信息
+        this.damageCurrentChange(1);
+
+        //获取所以得职工信息
+        //this.getAllEmployee();
+
+        //获取仓库管理员信息
+        this.userCurrentChange(1);
+
+        //获取商品字典信息
+        this.goodsDirCurrentChange(1);
+
+        //获取供应商信息
+        this.providerCurrentChange(1);
+
+        //获取职工信息
+        this.employeeCurrentChange(1);
+
+        //获取系统管理员信息
+        this.systemManagerCurrentChange(1);
+
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 3000);
+        //this.fullscreenLoading = false;
+      }
 
     },
 
     created() {
-      //获取带过来的参数，和设置请求的token
-      this.getParams();
-      //this.getWarehouseData();
-      //请求物品数据第一页
-      this.currentChange(1);
-      //请求，填充其他数据
-
-      //请求获取入库信息
-      this.getInstore(1);
-
-      //请求获取出库信息
-      this.outStoreCurrentChange(1);
-
-      //请求获取报损信息
-      this.damageCurrentChange(1);
-
-      //获取所以得职工信息
-      //this.getAllEmployee();
-
-      //获取仓库管理员信息
-      this.userCurrentChange(1);
-
-      //获取商品字典信息
-      this.goodsDirCurrentChange(1);
-
-      //获取供应商信息
-      this.providerCurrentChange(1);
-
-      //获取职工信息
-      this.employeeCurrentChange(1);
-
-      //获取系统管理员信息
-      this.systemManagerCurrentChange(1);
-
+      this.openFullScreen();
     }
     ,
     watch: {

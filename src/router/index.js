@@ -19,6 +19,7 @@ import AddGoodsDir from '../components/AddGoodsDir'
 import AddProvider from '../components/AddProvider'
 import AddEmployee from '../components/AddEmployee'
 import Boss_login_success from '../components/Boss_login_success'
+import AddSystemManager from '../components/AddSystemManager'
 
 Vue.use(Router)
 
@@ -48,6 +49,7 @@ export default new Router({
 
     {path: '/Boss_login_success', name: 'Boss_login_success', component: Boss_login_success},
 
+    {path: '/AddSystemManager', name: 'AddSystemManager', component: AddSystemManager},
 
   ]
 })

@@ -5,65 +5,65 @@
 
       <el-card class="box-card" style="width: 80%;margin-left: 10%">
         <div slot="header" class="clearfix">
-          <span style="margin-left: 40%;color: #909399;font-size: large">仓库管理员新增</span>
+          <span style="margin-left: 40%;color: #909399;font-size: large">系统管理员新增</span>
           <el-button style="float: left; padding: 3px 0" type="text" @click="back()">&lt;返回</el-button>
         </div>
 
 
-          <!--链入物品-->
-          <div>
-            <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库用户管理</div>
+        <!--链入物品-->
+        <div>
+          <div style="margin-left: 40%;margin-top: 1%;margin-bottom: 1%;font-size: 120%;color: #909399">仓库用户管理</div>
 
-            <el-table
-              :data="user"
-              border
-              style="width: 100%">
-              <el-table-column
-                prop="employeeName"
-                label="用户名称"
-                width="290"
-                align="center">
-              </el-table-column>
+          <el-table
+            :data="user"
+            border
+            style="width: 100%">
+            <el-table-column
+              prop="employeeName"
+              label="用户名称"
+              width="290"
+              align="center">
+            </el-table-column>
 
-              <el-table-column
-                prop="telephone"
-                label="用户电话"
-                align="center"
-                width="300">
-              </el-table-column>
-              <el-table-column
-                prop="addr"
-                label="用户地址"
-                width="300"
-                align="center">
-              </el-table-column>
+            <el-table-column
+              prop="telephone"
+              label="用户电话"
+              align="center"
+              width="300">
+            </el-table-column>
+            <el-table-column
+              prop="addr"
+              label="用户地址"
+              width="300"
+              align="center">
+            </el-table-column>
 
-              <el-table-column
-                prop=""
-                label="操作"
-                width="270"
-                align="center">
-                <template slot-scope="scope">　
+            <el-table-column
+              prop=""
+              label="操作"
+              width="270"
+              align="center">
+              <template slot-scope="scope">　
 
-                  <el-button type="primary" style="width: 70%;text-align: center;;height: 35px"
-                             @click="updateUser(scope.$index, scope.row)">添加为仓库管理员
-                  </el-button>
+                <el-button type="primary" style="width: 70%;text-align: center;;height: 35px"
+                           @click="updateUser(scope.$index, scope.row)">添加为系统管理员
+                </el-button>
 
-                </template>
-              </el-table-column>
+              </template>
+            </el-table-column>
 
-            </el-table>
-            <div style="text-align: center;margin-top: 30px;">
-              <el-pagination
-                @current-change="userCurrentChange"
-                background
-                layout="prev, pager, next"
-                :total="userAllPage*10">
-              </el-pagination>
-            </div>
-
-
+          </el-table>
+          <div style="text-align: center;margin-top: 30px;">
+            <el-pagination
+              @current-change="userCurrentChange"
+              background
+              layout="prev, pager, next"
+              :total="userAllPage*10">
+            </el-pagination>
           </div>
+
+
+        </div>
 
 
       </el-card>
@@ -75,11 +75,11 @@
 
 <script>
 
-import {getEmployees} from "../api";
-import {updateEmployees} from "../api";
+  import {getEmployees} from "../api";
+  import {updateEmployees} from "../api";
 
-export default {
-    name: "AddUser",
+  export default {
+    name: "addSystemManager",
     data() {
       return {
         //用户信息
@@ -106,7 +106,7 @@ export default {
               //console.log(response.data);
 
               for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].status == 1) {
+                if (response.data[i].status == 1 || response.data[i].status == 3) {
                   this.allUser.push(response.data[i]);
                 }
               }
@@ -168,7 +168,7 @@ export default {
         }).then(() => {
           let data = JSON.stringify({
             id: row.id,
-            status: 3,
+            status: 4,
           });
           updateEmployees(data).then((response) => {
             //console.log(response.data);

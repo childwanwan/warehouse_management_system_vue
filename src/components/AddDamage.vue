@@ -198,7 +198,7 @@
       getGoodsMessage(value, index) {
         let data = JSON.stringify({goodsCode: value});
         getGoodsByGoodsCode(data).then((res) => {
-          console.log(res);
+          //console.log(res);
           if (res.retCode === 1) {
             if (res.data.length > 0) {
               let tempSpecificationItems = [];
@@ -208,11 +208,18 @@
               //console.log(tempSpecificationItems);
               this.specificationItems[index] = tempSpecificationItems;
               //console.log(this.specificationItems[index],index);
-
             } else {
               this.$message.error("您输入的物品编码有误，请重新输入");
             }
-          } else this.$message.error("您输入的物品编码有误，请重新输入");
+          } else {
+            if (res.retCode == '000000') {
+              this.$router.push({
+                path: '/'
+              });
+            } else {
+              this.$message.error(res.retMsg);
+            }
+          }
         }).catch(function (error) {
           console.log(error);
         })
@@ -230,7 +237,7 @@
           //console.log(item);
           let data = JSON.stringify({goodsCode: item.goodsCode, specificationItems: item.specificationItems});
           getGoodsByCondition(data).then((res) => {
-            console.log(res);
+            //console.log(res);
             if (res.retCode === 1) {
               if (res.data.length > 0) {
                 let temp = {};
@@ -248,6 +255,7 @@
                   }
                   if (m) {
                     this.lastDamageGoods.push(temp);
+                    this.$message.success("保存成功");
                   } else {
                     this.$message.warning("您已经保存过该数据了");
                   }
@@ -282,7 +290,7 @@
       },
       //出库
       doDamage() {
-        console.log(this.damage);
+        //console.log(this.damage);
         if (JSON.stringify(this.damage) == "{}" || this.damage.provideId == '' || this.damage.reserverId == '' || this.damage.provideId.length <= 0 || this.damage.reserverId.length <= 0 || this.damage.damageName=='' || this.damage.damageName.length<1) {
           this.$alert('请选择接收人或者提供者名称', '温馨提示', {
             confirmButtonText: '确定',
@@ -316,13 +324,11 @@
             comment:this.damage.comment,
             ids: this.lastDamageGoods,
           });
-          console.log(data);
+          //console.log(data);
           insertDamage(data).then((res) => {
             //console.log(res);
             if (res.retCode === 1) {
-              this.$router.push({
-                path: '/houseware_manager_login_success'
-              });
+              this.back();
             } else {
               if (res.retCode == '000000') {
                 this.$router.push({

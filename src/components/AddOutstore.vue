@@ -232,6 +232,7 @@
                   }
                   if (m) {
                     this.lastOutstoreGoods.push(temp);
+                    this.$message.success("保存成功");
                   } else {
                     this.$message.warning("您已经保存过该数据了");
                   }
@@ -269,7 +270,7 @@
       },
       //出库
       doOutstore() {
-        console.log(this.outstore);
+        //console.log(this.outstore);
         if (JSON.stringify(this.outstore)=="{}"|| this.outstore.provideId == '' || this.outstore.reserverId == '' || this.outstore.provideId.length <= 0 || this.outstore.reserverId.length <= 0) {
           this.$alert('请选择接收人或者提供者名称', '温馨提示', {
             confirmButtonText: '确定',
@@ -299,13 +300,11 @@
             totalNum: total,
             goodsList: this.lastOutstoreGoods,
           });
-          console.log(data);
+          //console.log(data);
           insertOutstore(data).then((res) => {
             //console.log(res);
             if (res.retCode === 1) {
-              this.$router.push({
-                path: '/houseware_manager_login_success'
-              });
+              this.back();
             } else {
               if (res.retCode == '000000') {
                 this.$router.push({
