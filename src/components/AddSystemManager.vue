@@ -29,7 +29,7 @@
               prop="telephone"
               label="用户电话"
               align="center"
-              width="300">
+              width="280">
             </el-table-column>
             <el-table-column
               prop="addr"

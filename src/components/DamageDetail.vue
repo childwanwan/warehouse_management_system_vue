@@ -94,7 +94,7 @@
           <el-table-column
             prop="goodsNum"
             label="报损数量"
-            width="235"
+            width="225"
             align="center">
           </el-table-column>
 
@@ -156,7 +156,7 @@
         });
         //console.log(data);
         getDamageById(data).then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.retCode === 1) {
             //转换数据
             //转出手人id

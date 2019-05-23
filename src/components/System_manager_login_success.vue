@@ -136,7 +136,7 @@
             <el-table-column
               prop="goodsNum"
               label="物品数量"
-              width="180"
+              width="170"
               align="center">
             </el-table-column>
 
@@ -190,7 +190,7 @@
           <el-table-column
             prop="totalNum"
             label="物品总数量"
-            width="252"
+            width="242"
             align="center">
           </el-table-column>
           <el-table-column
@@ -204,7 +204,7 @@
                          @click="showOutDetail(scope.$index, scope.row)">查询详情
               </el-button>
               　　　　　
-              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+              <el-button type="danger" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
                          @click="deleteOutstore(scope.$index, scope.row)">删除
               </el-button>
               <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
@@ -261,7 +261,7 @@
           <el-table-column
             prop="totalNum"
             label="物品总数量"
-            width="252"
+            width="242"
             align="center">
           </el-table-column>
           <el-table-column
@@ -276,7 +276,7 @@
               </el-button>
               　　　　　
 
-              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+              <el-button type="danger" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
                          @click="deleteInstore(scope.$index, scope.row)">删除
               </el-button>
             </template>
@@ -405,7 +405,7 @@
             prop="telephone"
             label="用户电话"
             align="center"
-            width="300">
+            width="280">
           </el-table-column>
           <el-table-column
             prop="addr"
@@ -506,7 +506,7 @@
             <el-table-column
               prop="goodsCode"
               label="物品编码"
-              width="180"
+              width="170"
               align="center">
             </el-table-column>
             <el-table-column
@@ -748,7 +748,7 @@
           <el-table-column
             prop="providerType"
             label="供应物品编码"
-            width="210"
+            width="190"
             align="center">
           </el-table-column>
           <el-table-column
@@ -787,7 +787,7 @@
               </el-button>
 
               <!--弹框-->
-              <el-dialog title="商品字典信息修改" :visible.sync="providerDialogFormVisible">
+              <el-dialog title="供应商信息修改" :visible.sync="providerDialogFormVisible">
                 <el-form :model="providerForm">
                   <el-form-item label="供应物品编码" :label-width="formLabelWidth">
                     <el-input v-model="providerForm.providerType" auto-complete="off"></el-input>
@@ -1087,7 +1087,7 @@
             this.productMessagetableData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val && i < this.allGoods.length; i++) {
               this.productMessagetableData.push(this.allGoods[i]);
             }
           } else {
@@ -1135,7 +1135,7 @@
             this.productMessagetableData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val && i < this.allGoods.length; i++) {
               this.productMessagetableData.push(this.conditionGoods[i]);
             }
           } else {
@@ -1201,7 +1201,7 @@
         this.instoreCurrentPage = val;
         if (this.allInstore.length > 0) {
           this.instore = [];
-          for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+          for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize && i < this.allInstore.length; i++) {
             this.instore.push(this.allInstore[i]);
           }
         } else {
@@ -1285,7 +1285,7 @@
                 }
               } else {
                 this.instore = [];
-                for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+                for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize && i < this.allInstore.length; i++) {
                   this.instore.push(res.instores[i]);
                 }
               }
@@ -1926,7 +1926,7 @@
             this.goodsDirData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.goodsDirPageSize; i < this.goodsDirPageSize * val, i < this.allGoodsDir.length; i++) {
+            for (let i = (val - 1) * this.goodsDirPageSize; i < this.goodsDirPageSize * val && i < this.allGoodsDir.length; i++) {
               this.allGoodsDir[i].specificationItems = "[" + this.allGoodsDir[i].specificationItems.toString() + "]";
               this.goodsDirData.push(this.allGoodsDir[i]);
             }
@@ -1979,7 +1979,7 @@
             this.goodsDirData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.goodsDirPageSize; i < this.goodsDirPageSize * val, i < this.allGoodsDir.length; i++) {
+            for (let i = (val - 1) * this.goodsDirPageSize; i < this.goodsDirPageSize * val && i < this.allGoodsDir.length; i++) {
               this.goodsDirData.push(this.conditionGoodsDir[i]);
             }
           } else {
@@ -2087,6 +2087,10 @@
         getProviderByCondition(this.searchProviderByName).then((res) => {
           //console.log(res);
           //console.log(res.retCode);
+          if (JSON.stringify(res) == "{}"){
+            this.$message.error("未查询到相关数据，请确认输入数据是否有误");
+            return;
+          }
           if (res.retCode === 1) {
             //console.log(res.data);
             this.conditionProvider = res.data;
@@ -2131,7 +2135,7 @@
             this.providerData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.providerPageSize; i < this.providerPageSize * val, i < this.allProvider.length; i++) {
+            for (let i = (val - 1) * this.providerPageSize; i < this.providerPageSize * val && i < this.allProvider.length; i++) {
               this.providerData.push(this.allProvider[i]);
             }
           } else {
@@ -2180,7 +2184,7 @@
             this.providerData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.providerPageSize; i < this.providerPageSize * val, i < this.allProvider.length; i++) {
+            for (let i = (val - 1) * this.providerPageSize; i < this.providerPageSize * val && i < this.allProvider.length; i++) {
               this.providerData.push(this.conditionProvider[i]);
             }
           } else {
@@ -2332,7 +2336,7 @@
             this.employeeData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.employeePageSize; i < this.employeePageSize * val, i < this.allEmployee.length; i++) {
+            for (let i = (val - 1) * this.employeePageSize; i < this.employeePageSize * val && i < this.allEmployee.length; i++) {
               this.employeeData.push(this.allEmployee[i]);
             }
           } else {
@@ -2385,7 +2389,7 @@
             //console.log(this.employeeData);
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.employeePageSize; i < this.employeePageSize * val, i < this.allEmployee.length; i++) {
+            for (let i = (val - 1) * this.employeePageSize; i < this.employeePageSize * val && i < this.allEmployee.length; i++) {
               this.employeeData.push(this.conditionEmployee[i]);
             }
           } else {

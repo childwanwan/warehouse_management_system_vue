@@ -124,7 +124,7 @@
             <el-table-column
               prop="goodsNum"
               label="物品数量"
-              width="180"
+              width="170"
               align="center">
             </el-table-column>
 
@@ -178,7 +178,7 @@
           <el-table-column
             prop="totalNum"
             label="物品总数量"
-            width="252"
+            width="242"
             align="center">
           </el-table-column>
           <el-table-column
@@ -192,7 +192,7 @@
                          @click="showOutDetail(scope.$index, scope.row)">查询详情
               </el-button>
               　　　　　
-              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+              <el-button type="danger" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
                          @click="deleteOutstore(scope.$index, scope.row)">删除
               </el-button>
               <!--<el-button width="40" type="info" @click="deleteUser(scope.row.phone)">出库</el-button>-->
@@ -249,7 +249,7 @@
           <el-table-column
             prop="totalNum"
             label="物品总数量"
-            width="252"
+            width="242"
             align="center">
           </el-table-column>
           <el-table-column
@@ -264,7 +264,7 @@
               </el-button>
               　　　　　
 
-              <el-button type="primary" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
+              <el-button type="danger" style="width: 30%;text-align: center;margin-right:-35%;height: 25px"
                          @click="deleteInstore(scope.$index, scope.row)">删除
               </el-button>
             </template>
@@ -491,11 +491,15 @@
         if (this.searchByName === '') {
           if (val > 1) {
             this.productMessagetableData = [];
-            //console.log(this.productMessagetableData);
+            // console.log("清空后"+this.productMessagetableData);
+            // console.log("(val-1)*this.pageSize="+(val - 1) * this.pageSize);
+            // console.log("this.pageSize * val="+this.pageSize * val);
+            // console.log("this.allGoods.length="+this.allGoods.length);
             //数组赋值
-            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val && i < this.allGoods.length; i++) {
               this.productMessagetableData.push(this.allGoods[i]);
             }
+            //console.log("复制后"+this.productMessagetableData);
           } else {
 
             getAllgoods().then((response) => {
@@ -541,7 +545,7 @@
             this.productMessagetableData = [];
             //console.log(this.productMessagetableData);
             //数组赋值
-            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val, i < this.allGoods.length; i++) {
+            for (let i = (val - 1) * this.pageSize; i < this.pageSize * val && i < this.allGoods.length; i++) {
               this.productMessagetableData.push(this.conditionGoods[i]);
             }
           } else {
@@ -607,7 +611,7 @@
         this.instoreCurrentPage = val;
         if (this.allInstore.length > 0) {
           this.instore = [];
-          for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+          for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize && i < this.allInstore.length; i++) {
             this.instore.push(this.allInstore[i]);
           }
         } else {
@@ -691,7 +695,7 @@
                 }
               } else {
                 this.instore = [];
-                for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize, i < this.allInstore.length; i++) {
+                for (let i = (val - 1) * this.instorePageSize; i < val * this.instorePageSize && i < this.allInstore.length; i++) {
                   this.instore.push(res.instores[i]);
                 }
               }
@@ -1136,7 +1140,6 @@
 
     created() {
       this.openFullScreen();
-
     },
     watch: {
       //左边点击菜单栏那个显示，那个不显示函数

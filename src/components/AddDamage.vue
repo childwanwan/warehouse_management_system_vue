@@ -16,7 +16,7 @@
             <el-col :span="12">
               <el-form-item label="报损单创建者">
                 <el-select v-model="damage.provideId" placeholder="请选择报损单创建者" style="width: 40%">
-                  <el-option v-for="(item,index) in provideName" :value="item" :key="item">
+                  <el-option v-for="(item,index) in provideName" :value="item" :key="index">
                     {{item}}
                   </el-option>
                 </el-select>
@@ -26,7 +26,7 @@
 
               <el-form-item label="报损单审核人">
                 <el-select v-model="damage.reserverId" placeholder="请选择报损单审核人" style="width: 40%">
-                  <el-option v-for="(item,index) in reserverName" :value="item" :key="item">
+                  <el-option v-for="(item,index) in reserverName" :value="item" :key="index">
                     {{item}}
                   </el-option>
                 </el-select>
@@ -101,7 +101,7 @@
                     <el-select v-model="item.specificationItems" placeholder="请选择物品规格">
                       <el-option v-for="(specification,specificationIndex) in specificationItems[index]"
                                  :value="specification"
-                                 :key="specification">
+                                 :key="specificationIndex">
                         {{specification}}<!--lallalalallala{{specificationItems[index]}}-->
                       </el-option>
                     </el-select>

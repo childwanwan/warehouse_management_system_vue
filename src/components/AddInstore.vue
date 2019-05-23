@@ -16,7 +16,7 @@
             <el-col :span="12">
               <el-form-item label="物品提供者">
                 <el-select v-model="instore.provideId" placeholder="请选择物品提供者" style="width: 40%">
-                  <el-option v-for="(item,index) in provideName" :value="item" :key="item">
+                  <el-option v-for="(item,index) in provideName" :value="item" :key="index">
                     {{item}}
                   </el-option>
                 </el-select>
@@ -26,7 +26,7 @@
 
               <el-form-item label="物品接收者">
                 <el-select v-model="instore.reserverId" placeholder="请选择物品接收者" style="width: 40%">
-                  <el-option v-for="(item,index) in reserverName" :value="item" :key="item">
+                  <el-option v-for="(item,index) in reserverName" :value="item" :key="index">
                     {{item}}
                   </el-option>
                 </el-select>
@@ -85,7 +85,7 @@
                     <el-select v-model="item.specificationItems" placeholder="请选择物品规格">
                       <el-option v-for="(specification,specificationIndex) in specificationItems[index]"
                                  :value="specification"
-                                 :key="specification">
+                                 :key="specificationIndex">
                         {{specification}}<!--lallalalallala{{specificationItems[index]}}-->
                       </el-option>
                     </el-select>
@@ -332,6 +332,7 @@
           //console.log(res);
           if (res.retCode === 1) {
             if (res.data.length > 0) {
+              this.reserverName = [];
               this.allEmployee = res.data;
               for (let i = 0; i < res.data.length; i++) {
                 if (res.data[i].status===3 ||res.data[i].status===4||res.data[i].status===5) {

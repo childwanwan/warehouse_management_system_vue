@@ -208,8 +208,8 @@
         ipAddress: '',
 
         ruleForm: {
-          username: '15797934717',
-          password: '123456',
+          username: '',
+          password: '',
           identify: '仓库管理员',
           securityCode: '',
         },

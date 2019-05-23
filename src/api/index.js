@@ -1,14 +1,12 @@
 import axios from 'axios'
 import storage, { TOKEN_KEY } from './../public/js/storage';
 
-//export const apiDomain = 'https://i-code.top/qs'
-//export const apiDomain = 'http://120.78.132.185:8050/qs'
+
 export const apiDomain = 'http://120.78.132.185:8880/'
-//const baseURL = `${apiDomain}/api/v1`
+//export const apiDomain = 'http://localhost:8880/'
 const baseURL = `${apiDomain}`
 
 axios.defaults.baseURL = baseURL
-
 
 // mock数据
 // const baseURL = '/api/v1'

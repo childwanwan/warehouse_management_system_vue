@@ -13,7 +13,7 @@
           <el-form-item label="供应物品编码" :label-width="formLabelWidth">
 <!--            <el-input v-model="providerForm.providerType" auto-complete="off"></el-input>-->
             <el-select v-model="providerForm.providerType" placeholder="请选择供应物品编码" style="width: 40%">
-              <el-option v-for="(item,index) in allGoodsCode" :value="item" :key="item">
+              <el-option v-for="(item,index) in allGoodsCode" :value="item" :key="index">
                 {{item}}
               </el-option>
             </el-select>

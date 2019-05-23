@@ -81,7 +81,7 @@
           <el-table-column
             prop="buyNum"
             label="入库数量"
-            width="235"
+            width="215"
             align="center">
           </el-table-column>
 

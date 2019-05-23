@@ -75,14 +75,14 @@
 
           <el-table-column
             prop="comment"
-            label="入库描述"
+            label="出库描述"
             align="center"
             width="245">
           </el-table-column>
           <el-table-column
             prop="sellNum"
-            label="入库数量"
-            width="235"
+            label="出库数量"
+            width="215"
             align="center">
           </el-table-column>
 
@@ -193,14 +193,14 @@
         })
 
         getOutstoresGoodsByOutstoresId(data).then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.retCode === 1) {
             for (let i = 0; i < response.data.length; i++) {
               let data = JSON.stringify({
                 id: response.data[i].goodsId,
               });
               getGoodsById(data).then((res) => {
-                console.log(res);
+                //console.log(res);
                 if (res.retCode === 1) {
                   response.data[i]['comment'] = res.data.comment;
                   //response.data[i]['goodsNum'] = res.data.goodsNum;
